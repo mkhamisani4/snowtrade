@@ -59,7 +59,7 @@ export default function Home() {
 
         <div className="text-center">
           <Link
-            href="/scenarios"
+            href="/simulate"
             className="inline-block button-primary py-3.5 px-10 text-base font-semibold"
           >
             Start Learning

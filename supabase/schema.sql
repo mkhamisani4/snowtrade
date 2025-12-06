@@ -78,3 +78,4 @@ CREATE INDEX idx_trades_session ON trades(session_id);
 CREATE INDEX idx_trading_sessions_user ON trading_sessions(user_id);
 CREATE INDEX idx_trading_sessions_scenario ON trading_sessions(scenario_id);
 
+

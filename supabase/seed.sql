@@ -67,3 +67,4 @@ INSERT INTO scenarios (name, description, duration_days, starting_balance, stock
 -- Note: Price data and news items will be generated programmatically
 -- based on scenario logic and AI generation
 
+
