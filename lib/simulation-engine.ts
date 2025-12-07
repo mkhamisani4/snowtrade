@@ -11,12 +11,34 @@ export interface ScenarioWithHour {
 // Re-export NewsItem for convenience
 export type { NewsItem } from './fake-news'
 
+export interface TradeRecord {
+  ticker: string
+  type: 'buy' | 'sell' | 'call' | 'put'
+  shares: number
+  price: number
+  hour: number
+  strikePrice?: number // For options
+  expirationHour?: number // For options
+}
+
+export interface OptionPosition {
+  ticker: string
+  type: 'call' | 'put'
+  contracts: number
+  strikePrice: number
+  premium: number
+  expirationHour: number
+  hour: number // When purchased
+}
+
 export interface SimulationState {
   currentHour: number
   totalHours: number
   cashBalance: number
   startingBalance: number
   positions: Map<string, Position>
+  optionPositions: Map<string, OptionPosition[]> // ticker -> array of option positions
+  watchlist: Set<string> // Tickers on watchlist
   stockPrices: Map<string, number>
   priceHistory: Map<string, number[]>
   activeScenarios: Scenario[]
@@ -24,6 +46,7 @@ export interface SimulationState {
   portfolioHistory: number[]
   newsHistory: ScenarioWithHour[] // Track all scenarios with their hour
   allNewsItems: NewsItem[] // Track all news items (real + fake) per hour
+  tradeHistory: TradeRecord[] // Track all trades for learning analysis
 }
 
 export interface Position {
@@ -58,6 +81,8 @@ export class TradingSimulation {
       cashBalance: startingBalance,
       startingBalance,
       positions: new Map(),
+      optionPositions: new Map(),
+      watchlist: new Set(),
       stockPrices: new Map(),
       priceHistory: new Map(),
       activeScenarios: [],
@@ -65,6 +90,7 @@ export class TradingSimulation {
       portfolioHistory: [startingBalance],
       newsHistory: [], // Array of {scenario, hour}
       allNewsItems: [], // All news items (real + fake)
+      tradeHistory: [], // Track all trades
     }
 
     // Initialize stock prices
@@ -84,11 +110,101 @@ export class TradingSimulation {
 
   getPortfolioValue(): number {
     let total = this.state.cashBalance
+    // Stock positions
     this.state.positions.forEach((position, ticker) => {
       const currentPrice = this.getCurrentPrice(ticker)
       total += position.shares * currentPrice
     })
+    // Option positions
+    this.state.optionPositions.forEach((options, ticker) => {
+      const currentPrice = this.getCurrentPrice(ticker)
+      options.forEach(option => {
+        if (option.expirationHour > this.state.currentHour) {
+          // Option is still active, calculate intrinsic value
+          let intrinsicValue = 0
+          if (option.type === 'call') {
+            intrinsicValue = Math.max(0, currentPrice - option.strikePrice)
+          } else { // put
+            intrinsicValue = Math.max(0, option.strikePrice - currentPrice)
+          }
+          // Options are worth 100 shares per contract
+          total += intrinsicValue * option.contracts * 100
+        }
+        // Expired options are worth 0
+      })
+    })
     return total
+  }
+
+  toggleWatchlist(ticker: string): void {
+    if (this.state.watchlist.has(ticker)) {
+      this.state.watchlist.delete(ticker)
+    } else {
+      this.state.watchlist.add(ticker)
+    }
+  }
+
+  executeOptionTrade(
+    ticker: string,
+    type: 'call' | 'put',
+    contracts: number,
+    strikePrice: number,
+    expirationHours: number = 8 // Default 1 trading day
+  ): { success: boolean; error?: string } {
+    const currentPrice = this.getCurrentPrice(ticker)
+    if (!currentPrice) {
+      return { success: false, error: 'Stock not found' }
+    }
+
+    // Simplified option pricing: premium = (current price * volatility * time) / 10
+    // For calls: add intrinsic value if in-the-money
+    // For puts: add intrinsic value if in-the-money
+    const timeValue = expirationHours / 80 // Normalize to simulation length
+    const volatility = 0.15 // Base volatility
+    let premium = currentPrice * volatility * timeValue
+
+    if (type === 'call' && currentPrice > strikePrice) {
+      premium += (currentPrice - strikePrice) * 0.1 // In-the-money premium
+    } else if (type === 'put' && currentPrice < strikePrice) {
+      premium += (strikePrice - currentPrice) * 0.1 // In-the-money premium
+    }
+
+    const totalCost = premium * contracts * 100 // 100 shares per contract
+
+    if (totalCost > this.state.cashBalance) {
+      return { success: false, error: 'Insufficient funds' }
+    }
+
+    // Add option position
+    const expirationHour = this.state.currentHour + expirationHours
+    const option: OptionPosition = {
+      ticker,
+      type,
+      contracts,
+      strikePrice,
+      premium,
+      expirationHour,
+      hour: this.state.currentHour,
+    }
+
+    const existingOptions = this.state.optionPositions.get(ticker) || []
+    existingOptions.push(option)
+    this.state.optionPositions.set(ticker, existingOptions)
+
+    this.state.cashBalance -= totalCost
+
+    // Record trade
+    this.state.tradeHistory.push({
+      ticker,
+      type,
+      shares: contracts,
+      price: premium,
+      hour: this.state.currentHour,
+      strikePrice,
+      expirationHour,
+    })
+
+    return { success: true }
   }
 
   executeTrade(ticker: string, type: 'buy' | 'sell', shares: number): { success: boolean; error?: string } {
@@ -115,6 +231,15 @@ export class TradingSimulation {
         avgPrice: newAvgPrice,
       })
       this.state.cashBalance -= cost
+      
+      // Record trade
+      this.state.tradeHistory.push({
+        ticker,
+        type: 'buy',
+        shares,
+        price: currentPrice,
+        hour: this.state.currentHour,
+      })
     } else {
       if (position.shares < shares) {
         return { success: false, error: 'Insufficient shares' }
@@ -127,6 +252,15 @@ export class TradingSimulation {
         avgPrice: position.avgPrice,
       })
       this.state.cashBalance += proceeds
+      
+      // Record trade
+      this.state.tradeHistory.push({
+        ticker,
+        type: 'sell',
+        shares,
+        price: currentPrice,
+        hour: this.state.currentHour,
+      })
     }
 
     return { success: true }
@@ -254,15 +388,25 @@ export class TradingSimulation {
       priceChanges.set(stock.ticker, { old: oldPrice, new: newPrice, change })
     })
 
-    // Complete scenarios that have run their duration
-    this.state.activeScenarios = this.state.activeScenarios.filter(scenario => {
-      const shouldComplete = Math.random() < 0.3 // 30% chance to complete each active scenario
-      if (shouldComplete) {
-        this.state.completedScenarios.push(scenario)
-        return false
-      }
-      return true
-    })
+        // Complete scenarios that have run their duration
+        this.state.activeScenarios = this.state.activeScenarios.filter(scenario => {
+          const shouldComplete = Math.random() < 0.3 // 30% chance to complete each active scenario
+          if (shouldComplete) {
+            this.state.completedScenarios.push(scenario)
+            return false
+          }
+          return true
+        })
+
+        // Expire options
+        this.state.optionPositions.forEach((options, ticker) => {
+          const activeOptions = options.filter(option => option.expirationHour > this.state.currentHour)
+          if (activeOptions.length === 0) {
+            this.state.optionPositions.delete(ticker)
+          } else {
+            this.state.optionPositions.set(ticker, activeOptions)
+          }
+        })
 
     // At end of trading day, trigger remaining scenarios to total 2-4 per day
     // Ensure 50/50 split of positive/negative

@@ -8,11 +8,13 @@ interface StockCardProps {
   currentPrice: number
   priceChange?: { old: number; new: number; change: number }
   position?: Position
+  isWatched?: boolean
   onClick: () => void
   onInfoClick?: () => void
+  onWatchlistToggle?: () => void
 }
 
-export default function StockCard({ stock, currentPrice, priceChange, position, onClick, onInfoClick }: StockCardProps) {
+export default function StockCard({ stock, currentPrice, priceChange, position, isWatched, onClick, onInfoClick, onWatchlistToggle }: StockCardProps) {
   const changePercent = priceChange 
     ? ((priceChange.change / priceChange.old) * 100)
     : ((currentPrice - stock.price) / stock.price) * 100
@@ -37,17 +39,34 @@ export default function StockCard({ stock, currentPrice, priceChange, position, 
                 {position.shares} shares
               </div>
             )}
-            {onInfoClick && (
-              <button
-                onClick={(e) => {
-                  e.stopPropagation()
-                  onInfoClick()
-                }}
-                className="px-3 py-1.5 bg-[#2c2c2e] hover:bg-[#38383a] text-white rounded-lg text-xs font-semibold transition-all"
-              >
-                ℹ️ Info
-              </button>
-            )}
+            <div className="flex gap-2">
+              {onWatchlistToggle && (
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    onWatchlistToggle()
+                  }}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+                    isWatched
+                      ? 'bg-[#ff9f0a]/20 text-[#ff9f0a] hover:bg-[#ff9f0a]/30'
+                      : 'bg-[#2c2c2e] hover:bg-[#38383a] text-[#98989d]'
+                  }`}
+                >
+                  {isWatched ? '⭐' : '☆'}
+                </button>
+              )}
+              {onInfoClick && (
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    onInfoClick()
+                  }}
+                  className="px-3 py-1.5 bg-[#2c2c2e] hover:bg-[#38383a] text-white rounded-lg text-xs font-semibold transition-all"
+                >
+                  ℹ️ Info
+                </button>
+              )}
+            </div>
           </div>
           <div className="flex items-center gap-4 text-sm">
             <div>

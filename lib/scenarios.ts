@@ -2242,6 +2242,608 @@ export const scenarios: Scenario[] = [
     impact: 'high',
     duration: 'medium'
   },
+  // Additional Negative Scenarios (221-250)
+  {
+    id: '221',
+    title: 'Major Data Breach at Glacier Tech',
+    description: 'GLCR announces massive data breach affecting millions of users, triggering regulatory investigations.',
+    type: 'crisis',
+    sentiment: 'negative',
+    affectedStocks: ['GLCR', 'CLOUD'],
+    impact: 'extreme',
+    duration: 'long'
+  },
+  {
+    id: '222',
+    title: 'Solar Energy Co Factory Fire',
+    description: 'SOLR reports major factory fire destroying production facilities, halting manufacturing for months.',
+    type: 'crisis',
+    sentiment: 'negative',
+    affectedStocks: ['SOLR'],
+    impact: 'extreme',
+    duration: 'long'
+  },
+  {
+    id: '223',
+    title: 'MedTech Solutions Product Recall',
+    description: 'MEDX issues urgent recall of flagship medical device after safety concerns, facing potential lawsuits.',
+    type: 'regulatory',
+    sentiment: 'negative',
+    affectedStocks: ['MEDX', 'BIO'],
+    impact: 'extreme',
+    duration: 'medium'
+  },
+  {
+    id: '224',
+    title: 'FinTech Innovations Regulatory Fine',
+    description: 'FINX hit with $500M regulatory fine for compliance violations, stock plummets on news.',
+    type: 'regulatory',
+    sentiment: 'negative',
+    affectedStocks: ['FINX'],
+    impact: 'high',
+    duration: 'immediate'
+  },
+  {
+    id: '225',
+    title: 'AutoDrive Systems Fatal Accident',
+    description: 'AUTO autonomous vehicle involved in fatal accident, raising safety concerns and regulatory scrutiny.',
+    type: 'crisis',
+    sentiment: 'negative',
+    affectedStocks: ['AUTO'],
+    impact: 'extreme',
+    duration: 'long'
+  },
+  {
+    id: '226',
+    title: 'RetailMax Corp Bankruptcy Rumors',
+    description: 'RETAIL faces bankruptcy rumors as major creditors call in loans, supply chain collapses.',
+    type: 'crisis',
+    sentiment: 'negative',
+    affectedStocks: ['RETAIL'],
+    impact: 'extreme',
+    duration: 'short'
+  },
+  {
+    id: '227',
+    title: 'BioGen Labs Drug Trial Failure',
+    description: 'BIO announces Phase 3 trial failure for lead drug candidate, stock crashes 40% in pre-market.',
+    type: 'earnings',
+    sentiment: 'negative',
+    affectedStocks: ['BIO', 'MEDX'],
+    impact: 'extreme',
+    duration: 'immediate'
+  },
+  {
+    id: '228',
+    title: 'CloudScale Inc Service Outage',
+    description: 'CLOUD experiences catastrophic multi-day service outage, losing major enterprise customers.',
+    type: 'crisis',
+    sentiment: 'negative',
+    affectedStocks: ['CLOUD', 'GLCR'],
+    impact: 'high',
+    duration: 'short'
+  },
+  {
+    id: '229',
+    title: 'GreenPower Energy Project Cancellation',
+    description: 'GREEN loses $2B government contract, major renewable energy project cancelled indefinitely.',
+    type: 'regulatory',
+    sentiment: 'negative',
+    affectedStocks: ['GREEN', 'SOLR'],
+    impact: 'extreme',
+    duration: 'medium'
+  },
+  {
+    id: '230',
+    title: 'EduLearn Inc Accreditation Loss',
+    description: 'EDU loses accreditation for key programs, enrollment plummets as students transfer out.',
+    type: 'regulatory',
+    sentiment: 'negative',
+    affectedStocks: ['EDU'],
+    impact: 'high',
+    duration: 'long'
+  },
+  {
+    id: '231',
+    title: 'Technology Sector Antitrust Investigation',
+    description: 'Government launches broad antitrust investigation into tech sector, targeting major players.',
+    type: 'regulatory',
+    sentiment: 'negative',
+    affectedStocks: ['GLCR', 'CLOUD', 'FINX'],
+    impact: 'high',
+    duration: 'long'
+  },
+  {
+    id: '232',
+    title: 'Healthcare Sector Price Controls',
+    description: 'New legislation imposes strict price controls on healthcare products, crushing profit margins.',
+    type: 'political',
+    sentiment: 'negative',
+    affectedStocks: ['MEDX', 'BIO'],
+    impact: 'extreme',
+    duration: 'long'
+  },
+  {
+    id: '233',
+    title: 'Energy Sector Tax Hikes',
+    description: 'Government announces massive tax increases on energy companies, reducing profitability.',
+    type: 'political',
+    sentiment: 'negative',
+    affectedStocks: ['SOLR', 'GREEN'],
+    impact: 'high',
+    duration: 'medium'
+  },
+  {
+    id: '234',
+    title: 'Automotive Industry Trade War',
+    description: 'Trade war escalates, imposing 50% tariffs on automotive imports and components.',
+    type: 'geopolitical',
+    sentiment: 'negative',
+    affectedStocks: ['AUTO'],
+    impact: 'extreme',
+    duration: 'long'
+  },
+  {
+    id: '235',
+    title: 'Consumer Spending Collapse',
+    description: 'Consumer confidence plummets, retail spending drops 30% as recession fears mount.',
+    type: 'macro',
+    sentiment: 'negative',
+    affectedStocks: ['RETAIL', 'AUTO', 'EDU'],
+    impact: 'high',
+    duration: 'medium'
+  },
+  {
+    id: '236',
+    title: 'Major Cyberattack on Financial Sector',
+    description: 'Coordinated cyberattack targets financial infrastructure, causing widespread disruption.',
+    type: 'crisis',
+    sentiment: 'negative',
+    affectedStocks: ['FINX', 'CLOUD'],
+    impact: 'extreme',
+    duration: 'short'
+  },
+  {
+    id: '237',
+    title: 'Supply Chain Catastrophe',
+    description: 'Global supply chain breakdown affects manufacturing, causing production halts across industries.',
+    type: 'crisis',
+    sentiment: 'negative',
+    affectedStocks: ['AUTO', 'RETAIL', 'SOLR', 'GREEN'],
+    impact: 'high',
+    duration: 'medium'
+  },
+  {
+    id: '238',
+    title: 'Interest Rate Shock',
+    description: 'Central bank raises rates by 2% unexpectedly, crushing growth stocks and tech companies.',
+    type: 'macro',
+    sentiment: 'negative',
+    affectedStocks: ['GLCR', 'CLOUD', 'FINX', 'AUTO'],
+    impact: 'extreme',
+    duration: 'medium'
+  },
+  {
+    id: '239',
+    title: 'Market Crash - Flash Crash',
+    description: 'Flash crash triggers circuit breakers, panic selling across all sectors.',
+    type: 'crisis',
+    sentiment: 'negative',
+    affectedStocks: ['GLCR', 'EDU', 'SOLR', 'MEDX', 'FINX', 'AUTO', 'RETAIL', 'BIO', 'CLOUD', 'GREEN'],
+    impact: 'extreme',
+    duration: 'immediate'
+  },
+  {
+    id: '240',
+    title: 'CEO Resignation Scandal',
+    description: 'Multiple tech CEOs resign amid scandal, creating leadership vacuum and uncertainty.',
+    type: 'crisis',
+    sentiment: 'negative',
+    affectedStocks: ['GLCR', 'CLOUD', 'FINX'],
+    impact: 'high',
+    duration: 'short'
+  },
+  {
+    id: '241',
+    title: 'Environmental Disaster',
+    description: 'Major environmental disaster linked to energy companies, triggering massive lawsuits.',
+    type: 'environmental',
+    sentiment: 'negative',
+    affectedStocks: ['SOLR', 'GREEN'],
+    impact: 'extreme',
+    duration: 'long'
+  },
+  {
+    id: '242',
+    title: 'Education Budget Cuts',
+    description: 'Government slashes education funding, devastating online education providers.',
+    type: 'political',
+    sentiment: 'negative',
+    affectedStocks: ['EDU'],
+    impact: 'high',
+    duration: 'long'
+  },
+  {
+    id: '243',
+    title: 'Healthcare Reimbursement Cuts',
+    description: 'Medicare and insurance companies slash reimbursement rates, crushing healthcare profits.',
+    type: 'regulatory',
+    sentiment: 'negative',
+    affectedStocks: ['MEDX', 'BIO'],
+    impact: 'extreme',
+    duration: 'medium'
+  },
+  {
+    id: '244',
+    title: 'Retail Apocalypse',
+    description: 'E-commerce disruption accelerates, traditional retail faces existential crisis.',
+    type: 'sector',
+    sentiment: 'negative',
+    affectedStocks: ['RETAIL'],
+    impact: 'high',
+    duration: 'long'
+  },
+  {
+    id: '245',
+    title: 'Technology Bubble Burst',
+    description: 'AI and tech bubble bursts as valuations collapse, sector-wide selloff.',
+    type: 'sector',
+    sentiment: 'negative',
+    affectedStocks: ['GLCR', 'CLOUD', 'FINX'],
+    impact: 'extreme',
+    duration: 'medium'
+  },
+  {
+    id: '246',
+    title: 'Credit Crunch',
+    description: 'Credit markets freeze, companies unable to access capital for operations and growth.',
+    type: 'macro',
+    sentiment: 'negative',
+    affectedStocks: ['FINX', 'AUTO', 'RETAIL', 'SOLR', 'GREEN'],
+    impact: 'extreme',
+    duration: 'short'
+  },
+  {
+    id: '247',
+    title: 'Labor Strike',
+    description: 'Major labor strike halts production at multiple manufacturing facilities.',
+    type: 'social',
+    sentiment: 'negative',
+    affectedStocks: ['AUTO', 'SOLR', 'GREEN'],
+    impact: 'high',
+    duration: 'medium'
+  },
+  {
+    id: '248',
+    title: 'Patent Expiration Wave',
+    description: 'Key patents expire across healthcare sector, generic competition crushes margins.',
+    type: 'regulatory',
+    sentiment: 'negative',
+    affectedStocks: ['BIO', 'MEDX'],
+    impact: 'high',
+    duration: 'long'
+  },
+  {
+    id: '249',
+    title: 'Currency Devaluation',
+    description: 'Major currency devaluation triggers inflation, crushing import-dependent companies.',
+    type: 'macro',
+    sentiment: 'negative',
+    affectedStocks: ['AUTO', 'RETAIL', 'SOLR'],
+    impact: 'high',
+    duration: 'medium'
+  },
+  {
+    id: '250',
+    title: 'Massive Short Selling Attack',
+    description: 'Coordinated short selling attack targets multiple stocks, driving prices down rapidly.',
+    type: 'technical',
+    sentiment: 'negative',
+    affectedStocks: ['GLCR', 'CLOUD', 'BIO', 'GREEN'],
+    impact: 'extreme',
+    duration: 'short'
+  },
+  // Extreme Negative Scenarios - Price Plummets (251-280)
+  {
+    id: '251',
+    title: 'Bankruptcy Filing Announcement',
+    description: 'Major tech company files for Chapter 11 bankruptcy protection, shocking investors and triggering massive sell-offs.',
+    type: 'crisis',
+    sentiment: 'negative',
+    affectedStocks: ['GLCR', 'CLOUD'],
+    impact: 'extreme',
+    duration: 'immediate'
+  },
+  {
+    id: '252',
+    title: 'CEO Arrested for Fraud',
+    description: 'Company CEO arrested on charges of securities fraud and embezzlement. Trading halted pending investigation.',
+    type: 'crisis',
+    sentiment: 'negative',
+    affectedStocks: ['GLCR', 'BIO', 'MEDX'],
+    impact: 'extreme',
+    duration: 'medium'
+  },
+  {
+    id: '253',
+    title: 'Complete Product Recall',
+    description: 'Entire product line recalled due to safety concerns. Manufacturing halted indefinitely.',
+    type: 'crisis',
+    sentiment: 'negative',
+    affectedStocks: ['AUTO', 'BIO', 'MEDX'],
+    impact: 'extreme',
+    duration: 'long'
+  },
+  {
+    id: '254',
+    title: 'Class Action Lawsuit Filed',
+    description: 'Massive class action lawsuit filed alleging systematic fraud and misrepresentation to investors.',
+    type: 'regulatory',
+    sentiment: 'negative',
+    affectedStocks: ['GLCR', 'CLOUD', 'BIO'],
+    impact: 'extreme',
+    duration: 'long'
+  },
+  {
+    id: '255',
+    title: 'SEC Investigation Launched',
+    description: 'SEC launches formal investigation into accounting irregularities and potential securities violations.',
+    type: 'regulatory',
+    sentiment: 'negative',
+    affectedStocks: ['FINX', 'GLCR', 'CLOUD'],
+    impact: 'extreme',
+    duration: 'long'
+  },
+  {
+    id: '256',
+    title: 'Major Customer Exodus',
+    description: 'Top 5 customers representing 60% of revenue terminate contracts simultaneously.',
+    type: 'crisis',
+    sentiment: 'negative',
+    affectedStocks: ['CLOUD', 'GLCR', 'FINX'],
+    impact: 'extreme',
+    duration: 'immediate'
+  },
+  {
+    id: '257',
+    title: 'Toxic Chemical Spill',
+    description: 'Major environmental disaster: toxic chemical spill contaminates local water supply. Company faces massive fines and shutdown.',
+    type: 'environmental',
+    sentiment: 'negative',
+    affectedStocks: ['GREEN', 'SOLR', 'BIO'],
+    impact: 'extreme',
+    duration: 'long'
+  },
+  {
+    id: '258',
+    title: 'Complete Market Crash',
+    description: 'Panic selling triggers circuit breakers. Market-wide crash affects all sectors.',
+    type: 'macro',
+    sentiment: 'negative',
+    affectedStocks: ['GLCR', 'CLOUD', 'EDU', 'SOLR', 'BIO', 'MEDX', 'FINX', 'AUTO', 'RETAIL', 'GREEN'],
+    impact: 'extreme',
+    duration: 'short'
+  },
+  {
+    id: '259',
+    title: 'Hostile Takeover Attempt',
+    description: 'Aggressive takeover bid threatens company independence. Management fights back, creating uncertainty.',
+    type: 'merger',
+    sentiment: 'negative',
+    affectedStocks: ['BIO', 'MEDX', 'GREEN'],
+    impact: 'high',
+    duration: 'medium'
+  },
+  {
+    id: '260',
+    title: 'Massive Insider Trading Scandal',
+    description: 'Multiple executives implicated in insider trading scheme. Regulatory action expected.',
+    type: 'regulatory',
+    sentiment: 'negative',
+    affectedStocks: ['GLCR', 'CLOUD', 'FINX'],
+    impact: 'extreme',
+    duration: 'medium'
+  },
+  {
+    id: '261',
+    title: 'Critical Software Vulnerability',
+    description: 'Zero-day exploit discovered in core product. All customer data potentially compromised.',
+    type: 'crisis',
+    sentiment: 'negative',
+    affectedStocks: ['GLCR', 'CLOUD', 'FINX'],
+    impact: 'extreme',
+    duration: 'medium'
+  },
+  {
+    id: '262',
+    title: 'Supply Chain Collapse',
+    description: 'Primary supplier goes bankrupt. No alternative suppliers available. Production completely halted.',
+    type: 'crisis',
+    sentiment: 'negative',
+    affectedStocks: ['AUTO', 'SOLR', 'GREEN'],
+    impact: 'extreme',
+    duration: 'long'
+  },
+  {
+    id: '263',
+    title: 'Government Contract Cancelled',
+    description: 'Largest government contract worth billions cancelled due to performance issues.',
+    type: 'regulatory',
+    sentiment: 'negative',
+    affectedStocks: ['GLCR', 'CLOUD', 'BIO'],
+    impact: 'extreme',
+    duration: 'immediate'
+  },
+  {
+    id: '264',
+    title: 'Competitor Launches Superior Product',
+    description: 'Major competitor launches revolutionary product that makes current offerings obsolete.',
+    type: 'product',
+    sentiment: 'negative',
+    affectedStocks: ['GLCR', 'CLOUD', 'AUTO'],
+    impact: 'high',
+    duration: 'long'
+  },
+  {
+    id: '265',
+    title: 'Massive Debt Default',
+    description: 'Company defaults on major debt obligations. Credit rating downgraded to junk status.',
+    type: 'crisis',
+    sentiment: 'negative',
+    affectedStocks: ['FINX', 'RETAIL', 'AUTO'],
+    impact: 'extreme',
+    duration: 'immediate'
+  },
+  {
+    id: '266',
+    title: 'Key Patent Invalidated',
+    description: 'Court rules core patents invalid. Competitors can now copy technology freely.',
+    type: 'regulatory',
+    sentiment: 'negative',
+    affectedStocks: ['BIO', 'MEDX', 'GLCR'],
+    impact: 'extreme',
+    duration: 'long'
+  },
+  {
+    id: '267',
+    title: 'Massive Layoffs Announced',
+    description: 'Company announces 50% workforce reduction. Market interprets as desperation move.',
+    type: 'crisis',
+    sentiment: 'negative',
+    affectedStocks: ['GLCR', 'CLOUD', 'RETAIL'],
+    impact: 'high',
+    duration: 'immediate'
+  },
+  {
+    id: '268',
+    title: 'Foreign Market Ban',
+    description: 'Company banned from operating in largest foreign market due to regulatory violations.',
+    type: 'regulatory',
+    sentiment: 'negative',
+    affectedStocks: ['GLCR', 'CLOUD', 'AUTO', 'RETAIL'],
+    impact: 'extreme',
+    duration: 'long'
+  },
+  {
+    id: '269',
+    title: 'Complete Product Failure',
+    description: 'Flagship product completely fails in market. Sales drop to zero. No recovery plan.',
+    type: 'product',
+    sentiment: 'negative',
+    affectedStocks: ['GLCR', 'CLOUD', 'AUTO'],
+    impact: 'extreme',
+    duration: 'long'
+  },
+  {
+    id: '270',
+    title: 'Massive Accounting Fraud Revealed',
+    description: 'Internal audit reveals years of accounting fraud. Revenue inflated by 40%.',
+    type: 'crisis',
+    sentiment: 'negative',
+    affectedStocks: ['FINX', 'GLCR', 'RETAIL'],
+    impact: 'extreme',
+    duration: 'immediate'
+  },
+  {
+    id: '271',
+    title: 'Natural Disaster Destroys Facilities',
+    description: 'Hurricane/flood destroys primary manufacturing and data centers. Operations crippled.',
+    type: 'environmental',
+    sentiment: 'negative',
+    affectedStocks: ['GLCR', 'CLOUD', 'AUTO', 'SOLR'],
+    impact: 'extreme',
+    duration: 'long'
+  },
+  {
+    id: '272',
+    title: 'Ransomware Attack Shuts Down Operations',
+    description: 'Sophisticated ransomware attack encrypts all systems. Company cannot operate.',
+    type: 'crisis',
+    sentiment: 'negative',
+    affectedStocks: ['GLCR', 'CLOUD', 'FINX'],
+    impact: 'extreme',
+    duration: 'medium'
+  },
+  {
+    id: '273',
+    title: 'Major Partnership Terminated',
+    description: 'Strategic partnership worth billions terminated. No replacement available.',
+    type: 'partnership',
+    sentiment: 'negative',
+    affectedStocks: ['GLCR', 'CLOUD', 'AUTO'],
+    impact: 'high',
+    duration: 'immediate'
+  },
+  {
+    id: '274',
+    title: 'Stock Delisting Threat',
+    description: 'Exchange threatens delisting due to failure to meet listing requirements.',
+    type: 'regulatory',
+    sentiment: 'negative',
+    affectedStocks: ['RETAIL', 'GREEN', 'BIO'],
+    impact: 'extreme',
+    duration: 'medium'
+  },
+  {
+    id: '275',
+    title: 'Massive Product Liability Lawsuit',
+    description: 'Class action lawsuit seeks billions in damages for product-related injuries.',
+    type: 'crisis',
+    sentiment: 'negative',
+    affectedStocks: ['AUTO', 'BIO', 'MEDX'],
+    impact: 'extreme',
+    duration: 'long'
+  },
+  {
+    id: '276',
+    title: 'Key Executive Team Resigns',
+    description: 'Entire C-suite resigns simultaneously. No succession plan in place.',
+    type: 'crisis',
+    sentiment: 'negative',
+    affectedStocks: ['GLCR', 'CLOUD', 'BIO'],
+    impact: 'extreme',
+    duration: 'immediate'
+  },
+  {
+    id: '277',
+    title: 'Complete Market Access Loss',
+    description: 'Regulatory action bans company from all major markets. Revenue drops to zero.',
+    type: 'regulatory',
+    sentiment: 'negative',
+    affectedStocks: ['GLCR', 'CLOUD', 'FINX'],
+    impact: 'extreme',
+    duration: 'long'
+  },
+  {
+    id: '278',
+    title: 'Massive Inventory Write-Down',
+    description: 'Company writes down billions in inventory as worthless. Massive loss reported.',
+    type: 'crisis',
+    sentiment: 'negative',
+    affectedStocks: ['RETAIL', 'AUTO', 'SOLR'],
+    impact: 'extreme',
+    duration: 'immediate'
+  },
+  {
+    id: '279',
+    title: 'Competitor Acquires Key Supplier',
+    description: 'Major competitor acquires exclusive supplier. Company cut off from critical components.',
+    type: 'merger',
+    sentiment: 'negative',
+    affectedStocks: ['AUTO', 'SOLR', 'GREEN'],
+    impact: 'extreme',
+    duration: 'long'
+  },
+  {
+    id: '280',
+    title: 'Total System Failure',
+    description: 'Critical infrastructure failure causes complete operational shutdown. Recovery uncertain.',
+    type: 'crisis',
+    sentiment: 'negative',
+    affectedStocks: ['GLCR', 'CLOUD', 'FINX'],
+    impact: 'extreme',
+    duration: 'medium'
+  },
 ]
 
 export function getScenarioById(id: string): Scenario | undefined {

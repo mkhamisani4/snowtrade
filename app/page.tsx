@@ -1,6 +1,12 @@
+'use client'
+
+import { useState } from 'react'
 import Link from 'next/link'
+import HowItWorksModal from '@/components/HowItWorksModal'
 
 export default function Home() {
+  const [showHowItWorks, setShowHowItWorks] = useState(false)
+
   return (
     <div className="h-screen bg-black text-white flex flex-col overflow-hidden">
       <div className="container mx-auto px-8 py-8 max-w-5xl flex-1 flex flex-col justify-center">
@@ -57,13 +63,34 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="text-center">
+        <div className="text-center flex flex-col items-center gap-3">
           <Link
             href="/simulate"
             className="inline-block button-primary py-3.5 px-10 text-base font-semibold"
           >
             Start Learning
           </Link>
+          <button
+            onClick={() => setShowHowItWorks(true)}
+            className="text-[#98989d] hover:text-white transition-colors text-sm font-light underline"
+          >
+            Learn How It Works
+          </button>
+        </div>
+      </div>
+
+      {/* How It Works Modal */}
+      <HowItWorksModal
+        isOpen={showHowItWorks}
+        onClose={() => setShowHowItWorks(false)}
+      />
+
+      {/* Disclaimer */}
+      <div className="fixed bottom-3 right-3 z-40">
+        <div className="bg-[#1c1c1e]/95 backdrop-blur-sm border border-[#38383a]/50 rounded-lg px-3 py-1.5 max-w-[280px]">
+          <p className="text-[10px] text-[#98989d] font-light leading-tight">
+            <span className="text-[#007aff]">⚠️ Educational Only</span> • Simulated environment for learning. Not financial advice.
+          </p>
         </div>
       </div>
     </div>

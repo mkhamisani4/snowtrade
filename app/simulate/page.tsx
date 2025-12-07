@@ -24,7 +24,7 @@ export default function SimulatePage() {
   const [popupScenarios, setPopupScenarios] = useState<Scenario[]>([]) // Scenarios shown in popup
   const [priceChanges, setPriceChanges] = useState<Map<string, { old: number; new: number; change: number }>>(new Map())
   const [hasStarted, setHasStarted] = useState(false)
-  const [activeTab, setActiveTab] = useState<'stocks' | 'news' | 'chart'>('stocks')
+  const [activeTab, setActiveTab] = useState<'stocks' | 'news' | 'chart' | 'watchlist'>('stocks')
   const [showNewsPopup, setShowNewsPopup] = useState(false)
   const [isEndOfDay, setIsEndOfDay] = useState(false)
   const [isMidDay, setIsMidDay] = useState(false)
@@ -33,10 +33,28 @@ export default function SimulatePage() {
   const [difficulty, setDifficulty] = useState<'easy' | 'medium' | 'hard'>('medium')
 
   const startSimulation = () => {
-    const sim = new TradingSimulation(80, 10000) // 80 hours = 10 trading days (8 hours per day)
+    const sim = new TradingSimulation(80, 10000, difficulty) // 80 hours = 10 trading days (8 hours per day)
     setSimulation(sim)
     setState(sim.getState())
     setHasStarted(true)
+  }
+
+  const handleWatchlistToggle = (ticker: string) => {
+    if (!simulation) return
+    simulation.toggleWatchlist(ticker)
+    setState(simulation.getState())
+  }
+
+  const handleOptionTrade = (ticker: string, type: 'call' | 'put', contracts: number, strikePrice: number, expirationHours: number) => {
+    if (!simulation) return
+    const result = simulation.executeOptionTrade(ticker, type, contracts, strikePrice, expirationHours)
+    if (result.success) {
+      setState(simulation.getState())
+      setShowTradeModal(false)
+      setSelectedStock(null)
+    } else {
+      alert(result.error)
+    }
   }
 
   const handleTrade = (ticker: string, type: 'buy' | 'sell', shares: number) => {
@@ -134,36 +152,25 @@ export default function SimulatePage() {
                   <span className="text-lg font-semibold text-white capitalize">{difficulty}</span>
                 </div>
               </div>
-              <div className="relative">
-                <div className="relative h-2 bg-[#2c2c2e] rounded-lg mb-2">
-                  <div 
-                    className="absolute h-full rounded-lg transition-all duration-300"
-                    style={{
-                      width: difficulty === 'easy' ? '33%' : difficulty === 'medium' ? '66%' : '100%',
-                      background: difficulty === 'easy' 
-                        ? 'linear-gradient(to right, #30d158, #ff9f0a)' 
-                        : difficulty === 'medium'
-                        ? 'linear-gradient(to right, #30d158, #ff9f0a, #ff453a)'
-                        : 'linear-gradient(to right, #ff9f0a, #ff453a)'
-                    }}
-                  />
-                </div>
-                <input
-                  type="range"
-                  min="0"
-                  max="2"
-                  step="1"
-                  value={difficulty === 'easy' ? 0 : difficulty === 'medium' ? 1 : 2}
-                  onChange={(e) => {
-                    const val = parseInt(e.target.value)
-                    setDifficulty(val === 0 ? 'easy' : val === 1 ? 'medium' : 'hard')
-                  }}
-                  className="w-full h-2 bg-transparent rounded-lg appearance-none cursor-pointer slider absolute top-0"
-                />
-                <div className="flex justify-between mt-4 text-xs text-[#98989d] font-light">
-                  <span className={difficulty === 'easy' ? 'text-[#30d158] font-semibold' : ''}>Easy</span>
-                  <span className={difficulty === 'medium' ? 'text-[#ff9f0a] font-semibold' : ''}>Medium</span>
-                  <span className={difficulty === 'hard' ? 'text-[#ff453a] font-semibold' : ''}>Hard</span>
+              <div className="space-y-3">
+                <div className="flex gap-3">
+                  {(['easy', 'medium', 'hard'] as const).map((level) => (
+                    <button
+                      key={level}
+                      onClick={() => setDifficulty(level)}
+                      className={`flex-1 px-4 py-3 rounded-xl text-sm font-semibold transition-all ios-button ${
+                        difficulty === level
+                          ? level === 'easy' 
+                            ? 'bg-[#30d158] text-white' 
+                            : level === 'medium'
+                            ? 'bg-[#ff9f0a] text-white'
+                            : 'bg-[#ff453a] text-white'
+                          : 'bg-[#2c2c2e] text-[#98989d] hover:bg-[#38383a]'
+                      }`}
+                    >
+                      {level.charAt(0).toUpperCase() + level.slice(1)}
+                    </button>
+                  ))}
                 </div>
               </div>
             </div>
@@ -235,48 +242,61 @@ export default function SimulatePage() {
           {/* Left Column - Main Content */}
           <div className="lg:col-span-2 space-y-6">
 
-            {/* Tabs */}
-            <div className="flex gap-2 border-b border-[#38383a]/50">
-              <button
-                onClick={() => setActiveTab('stocks')}
-                className={`px-6 py-3 text-sm font-semibold transition-colors relative ${
-                  activeTab === 'stocks'
-                    ? 'text-white'
-                    : 'text-[#98989d] hover:text-white'
-                }`}
-              >
-                Stocks
-                {activeTab === 'stocks' && (
-                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#007aff]"></div>
-                )}
-              </button>
-              <button
-                onClick={() => setActiveTab('news')}
-                className={`px-6 py-3 text-sm font-semibold transition-colors relative ${
-                  activeTab === 'news'
-                    ? 'text-white'
-                    : 'text-[#98989d] hover:text-white'
-                }`}
-              >
-                News
-                {activeTab === 'news' && (
-                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#007aff]"></div>
-                )}
-              </button>
-              <button
-                onClick={() => setActiveTab('chart')}
-                className={`px-6 py-3 text-sm font-semibold transition-colors relative ${
-                  activeTab === 'chart'
-                    ? 'text-white'
-                    : 'text-[#98989d] hover:text-white'
-                }`}
-              >
-                Chart
-                {activeTab === 'chart' && (
-                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#007aff]"></div>
-                )}
-              </button>
-            </div>
+                {/* Tabs */}
+                <div className="flex gap-2 border-b border-[#38383a]/50">
+                  <button
+                    onClick={() => setActiveTab('stocks')}
+                    className={`px-6 py-3 text-sm font-semibold transition-colors relative ${
+                      activeTab === 'stocks'
+                        ? 'text-white'
+                        : 'text-[#98989d] hover:text-white'
+                    }`}
+                  >
+                    Stocks
+                    {activeTab === 'stocks' && (
+                      <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#007aff]"></div>
+                    )}
+                  </button>
+                  <button
+                    onClick={() => setActiveTab('watchlist')}
+                    className={`px-6 py-3 text-sm font-semibold transition-colors relative ${
+                      activeTab === 'watchlist'
+                        ? 'text-white'
+                        : 'text-[#98989d] hover:text-white'
+                    }`}
+                  >
+                    Watchlist
+                    {activeTab === 'watchlist' && (
+                      <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#007aff]"></div>
+                    )}
+                  </button>
+                  <button
+                    onClick={() => setActiveTab('news')}
+                    className={`px-6 py-3 text-sm font-semibold transition-colors relative ${
+                      activeTab === 'news'
+                        ? 'text-white'
+                        : 'text-[#98989d] hover:text-white'
+                    }`}
+                  >
+                    News
+                    {activeTab === 'news' && (
+                      <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#007aff]"></div>
+                    )}
+                  </button>
+                  <button
+                    onClick={() => setActiveTab('chart')}
+                    className={`px-6 py-3 text-sm font-semibold transition-colors relative ${
+                      activeTab === 'chart'
+                        ? 'text-white'
+                        : 'text-[#98989d] hover:text-white'
+                    }`}
+                  >
+                    Chart
+                    {activeTab === 'chart' && (
+                      <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#007aff]"></div>
+                    )}
+                  </button>
+                </div>
 
             {/* Tab Content */}
             <div>
@@ -284,9 +304,7 @@ export default function SimulatePage() {
                 <div className="card p-6">
                   <div className="flex items-center justify-between mb-6">
                     <h2 className="text-xl font-semibold text-white tracking-tight">Stocks</h2>
-                    <p className="text-xs text-[#98989d] font-light">
-                      Click <span className="text-[#007aff]">ℹ️ Info</span> to research companies
-                    </p>
+
                   </div>
                   <div className="space-y-3">
                     {mockStocks.map(stock => {
@@ -301,6 +319,7 @@ export default function SimulatePage() {
                           currentPrice={currentPrice}
                           priceChange={priceChange}
                           position={position}
+                          isWatched={state.watchlist?.has(stock.ticker)}
                           onClick={() => {
                             setSelectedStock(stock.ticker)
                             setShowTradeModal(true)
@@ -309,10 +328,63 @@ export default function SimulatePage() {
                             setSelectedStockDetail(stock)
                             setShowStockDetail(true)
                           }}
+                          onWatchlistToggle={() => handleWatchlistToggle(stock.ticker)}
                         />
                       )
                     })}
                   </div>
+                </div>
+              )}
+
+              {activeTab === 'watchlist' && (
+                <div className="card p-6">
+                  <div className="flex items-center justify-between mb-6">
+                    <h2 className="text-xl font-semibold text-white tracking-tight">Watchlist</h2>
+                    {state.watchlist && state.watchlist.size > 0 && (
+                      <div className="text-sm text-[#98989d] font-light">
+                        {state.watchlist.size} {state.watchlist.size === 1 ? 'stock' : 'stocks'}
+                      </div>
+                    )}
+                  </div>
+                  {!state.watchlist || state.watchlist.size === 0 ? (
+                    <div className="text-center py-12">
+                      <div className="text-4xl mb-4">⭐</div>
+                      <div className="text-lg text-white font-semibold mb-2">Your watchlist is empty</div>
+                      <div className="text-sm text-[#98989d] font-light">
+                        Click the star icon on any stock to add it to your watchlist
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="space-y-3">
+                      {mockStocks
+                        .filter(stock => state.watchlist?.has(stock.ticker))
+                        .map(stock => {
+                          const currentPrice = state.stockPrices.get(stock.ticker) || stock.price
+                          const priceChange = priceChanges.get(stock.ticker)
+                          const position = state.positions.get(stock.ticker)
+                          
+                          return (
+                            <StockCard
+                              key={stock.ticker}
+                              stock={stock}
+                              currentPrice={currentPrice}
+                              priceChange={priceChange}
+                              position={position}
+                              isWatched={true}
+                              onClick={() => {
+                                setSelectedStock(stock.ticker)
+                                setShowTradeModal(true)
+                              }}
+                              onInfoClick={() => {
+                                setSelectedStockDetail(stock)
+                                setShowStockDetail(true)
+                              }}
+                              onWatchlistToggle={() => handleWatchlistToggle(stock.ticker)}
+                            />
+                          )
+                        })}
+                    </div>
+                  )}
                 </div>
               )}
 
@@ -401,20 +473,21 @@ export default function SimulatePage() {
         </div>
       </div>
 
-      {/* Trade Modal */}
-      {showTradeModal && selectedStock && (
-        <TradeModal
-          ticker={selectedStock}
-          currentPrice={state.stockPrices.get(selectedStock) || 0}
-          position={state.positions.get(selectedStock)}
-          cashBalance={state.cashBalance}
-          onTrade={handleTrade}
-          onClose={() => {
-            setShowTradeModal(false)
-            setSelectedStock(null)
-          }}
-        />
-      )}
+          {/* Trade Modal */}
+          {showTradeModal && selectedStock && (
+            <TradeModal
+              ticker={selectedStock}
+              currentPrice={state.stockPrices.get(selectedStock) || 0}
+              position={state.positions.get(selectedStock)}
+              cashBalance={state.cashBalance}
+              onTrade={handleTrade}
+              onOptionTrade={handleOptionTrade}
+              onClose={() => {
+                setShowTradeModal(false)
+                setSelectedStock(null)
+              }}
+            />
+          )}
 
       {/* News Popup - Mid-day crisis or end of trading day */}
       {showNewsPopup && popupScenarios.length > 0 && (
@@ -440,6 +513,8 @@ export default function SimulatePage() {
           startingBalance={state.startingBalance}
           finalBalance={portfolioValue}
           portfolioHistory={state.portfolioHistory}
+          tradeHistory={state.tradeHistory}
+          newsHistory={state.newsHistory}
           onClose={() => {
             // Could navigate back to home or restart
           }}
@@ -456,6 +531,15 @@ export default function SimulatePage() {
           }}
         />
       )}
+
+      {/* Disclaimer */}
+      <div className="fixed bottom-3 right-3 z-40">
+        <div className="bg-[#1c1c1e]/95 backdrop-blur-sm border border-[#38383a]/50 rounded-lg px-3 py-1.5 max-w-[280px]">
+          <p className="text-[10px] text-[#98989d] font-light leading-tight">
+            <span className="text-[#007aff]">⚠️ Educational Only</span> • Simulated environment for learning. Not financial advice.
+          </p>
+        </div>
+      </div>
     </div>
   )
 }

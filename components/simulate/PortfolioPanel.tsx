@@ -95,11 +95,11 @@ export default function PortfolioPanel({ state, portfolioValue, priceHistory }: 
       </div>
 
       <div className="border-t border-[#38383a]/50 pt-4">
-        <h3 className="text-sm font-semibold text-white mb-3">Positions</h3>
+        <h3 className="text-sm font-semibold text-white mb-3">Stock Positions</h3>
         {state.positions.size === 0 ? (
-          <div className="text-sm text-[#98989d] font-light py-4">No positions</div>
+          <div className="text-sm text-[#98989d] font-light py-4">No stock positions</div>
         ) : (
-          <div className="space-y-3">
+          <div className="space-y-3 mb-4">
             {Array.from(state.positions.values())
               .filter(pos => pos.shares > 0)
               .map((pos) => {
@@ -126,6 +126,46 @@ export default function PortfolioPanel({ state, portfolioValue, priceHistory }: 
                 )
               })}
           </div>
+        )}
+        
+        {state.optionPositions && state.optionPositions.size > 0 && (
+          <>
+            <h3 className="text-sm font-semibold text-white mb-3 mt-4">Options Positions</h3>
+            <div className="space-y-2">
+              {Array.from(state.optionPositions.entries()).map(([ticker, options]) => {
+                const currentPrice = state.stockPrices.get(ticker) || 0
+                return options
+                  .filter(opt => opt.expirationHour > state.currentHour)
+                  .map((opt, idx) => {
+                    let intrinsicValue = 0
+                    if (opt.type === 'call') {
+                      intrinsicValue = Math.max(0, currentPrice - opt.strikePrice)
+                    } else {
+                      intrinsicValue = Math.max(0, opt.strikePrice - currentPrice)
+                    }
+                    const value = intrinsicValue * opt.contracts * 100
+                    const pnl = value - (opt.premium * opt.contracts * 100)
+
+                    return (
+                      <div key={`${ticker}-${idx}`} className="flex justify-between items-start text-xs">
+                        <div>
+                          <div className="font-semibold text-white">{ticker} {opt.type.toUpperCase()}</div>
+                          <div className="text-[#98989d] font-light mt-0.5">
+                            {opt.contracts} @ ${opt.strikePrice.toFixed(2)} • Exp: H{opt.expirationHour}
+                          </div>
+                        </div>
+                        <div className="text-right">
+                          <div className="font-semibold text-white">${value.toFixed(2)}</div>
+                          <div className={`text-[10px] font-semibold mt-0.5 ${pnl >= 0 ? 'text-[#30d158]' : 'text-[#ff453a]'}`}>
+                            {pnl >= 0 ? '+' : ''}${pnl.toFixed(2)}
+                          </div>
+                        </div>
+                      </div>
+                    )
+                  })
+              })}
+            </div>
+          </>
         )}
       </div>
     </div>
