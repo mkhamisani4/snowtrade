@@ -1,9 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { supabase } from '@/lib/supabase'
+import { supabase, isSupabaseConfigured } from '@/lib/supabase'
 import { generateNewsHeadline, generateNewsContent } from '@/lib/ai-service'
+
+// Mark route as dynamic to prevent build-time execution
+export const dynamic = 'force-dynamic'
+export const runtime = 'nodejs'
 
 export async function POST(request: NextRequest) {
   try {
+    if (!isSupabaseConfigured()) {
+      return NextResponse.json({ error: 'Supabase not configured' }, { status: 503 })
+    }
+
     const { scenarioId, day, eventType, stockId } = await request.json()
 
     if (!scenarioId || !day || !eventType || !stockId) {

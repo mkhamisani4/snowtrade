@@ -1,4 +1,4 @@
-import { openai } from './openai'
+import { getOpenAIClient, isOpenAIConfigured } from './openai'
 import { NewsItem, Trade, Stock, PerformanceMetrics } from './types'
 
 export async function generateNewsHeadline(
@@ -15,7 +15,20 @@ export async function generateNewsHeadline(
     sector: `Generate a sector-wide news headline that would affect ${stockName} (${ticker}) and its industry.`,
   }
 
+  // Return fallback if OpenAI not configured
+  if (!isOpenAIConfigured()) {
+    const fallbacks: Record<string, string> = {
+      good: `${stockName} announces positive developments`,
+      bad: `${stockName} faces challenges`,
+      rumor: `Rumors circulate about ${stockName}`,
+      macro: `Market conditions affect ${stockName}`,
+      sector: `Sector trends impact ${stockName}`,
+    }
+    return fallbacks[eventType] || `${stockName} news update`
+  }
+
   try {
+    const openai = getOpenAIClient()
     const response = await openai.chat.completions.create({
       model: 'gpt-4-turbo-preview',
       messages: [
@@ -52,7 +65,13 @@ export async function generateNewsContent(
   eventType: string,
   stockName: string
 ): Promise<string> {
+  // Return fallback if OpenAI not configured
+  if (!isOpenAIConfigured()) {
+    return `${headline}. Market participants are watching closely.`
+  }
+
   try {
+    const openai = getOpenAIClient()
     const response = await openai.chat.completions.create({
       model: 'gpt-4-turbo-preview',
       messages: [
@@ -89,7 +108,13 @@ export async function generateTradingFeedback(
     return `${t.type} ${t.shares} shares of ${stock?.ticker || 'unknown'} at $${t.price.toFixed(2)} on day ${t.day}`
   }).join('\n')
 
+  // Return fallback if OpenAI not configured
+  if (!isOpenAIConfigured()) {
+    return `You completed the ${scenarioName} scenario with a ${metrics.total_return > 0 ? '+' : ''}${(metrics.total_return * 100).toFixed(1)}% return. Keep practicing to improve your trading skills!`
+  }
+
   try {
+    const openai = getOpenAIClient()
     const response = await openai.chat.completions.create({
       model: 'gpt-4-turbo-preview',
       messages: [
