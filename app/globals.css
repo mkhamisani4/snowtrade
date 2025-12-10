@@ -293,4 +293,87 @@ body {
     .animate-slide-in {
       animation: slideIn 0.3s ease-out;
     }
+    
+    /* Snow/Winter Theme Effects */
+    @keyframes snowfall {
+      0% {
+        transform: translateY(-100vh) translateX(0);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      90% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh) translateX(20px);
+        opacity: 0;
+      }
+    }
+    
+    @keyframes snowfall-delayed {
+      0% {
+        transform: translateY(-100vh) translateX(0);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.7;
+      }
+      90% {
+        opacity: 0.7;
+      }
+      100% {
+        transform: translateY(100vh) translateX(-30px);
+        opacity: 0;
+      }
+    }
+    
+    .snowflake {
+      position: fixed;
+      top: -10px;
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 1em;
+      font-family: Arial, sans-serif;
+      text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+      pointer-events: none;
+      user-select: none;
+      z-index: 1;
+      animation: snowfall linear infinite;
+    }
+    
+    .snowflake:nth-child(odd) {
+      animation-name: snowfall-delayed;
+      animation-duration: 10s;
+    }
+    
+    .snowflake:nth-child(even) {
+      animation-duration: 15s;
+    }
+    
+    .snowflake:nth-child(3n) {
+      animation-duration: 12s;
+      animation-delay: -2s;
+    }
+    
+    .snowflake:nth-child(4n) {
+      animation-duration: 18s;
+      animation-delay: -5s;
+    }
+    
+    .snowflake:nth-child(5n) {
+      animation-duration: 14s;
+      animation-delay: -3s;
+    }
+    
+    /* Winter gradient accents */
+    .winter-glow {
+      box-shadow: 0 0 20px rgba(135, 206, 250, 0.2),
+                  0 0 40px rgba(135, 206, 250, 0.1);
+    }
+    
+    .winter-accent {
+      background: linear-gradient(135deg, rgba(135, 206, 250, 0.1) 0%, rgba(176, 224, 230, 0.05) 100%);
+      border-color: rgba(135, 206, 250, 0.2);
+    }
 

@@ -113,8 +113,25 @@ export default function SimulatePage() {
         {/* Subtle animated background */}
         <div className="absolute inset-0 bg-gradient-to-br from-[#000000] via-[#0a0a0f] to-[#000000]"></div>
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(0,122,255,0.1),transparent_50%)]"></div>
+        {/* Subtle winter gradient overlay */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(135,206,250,0.03),transparent_70%)] pointer-events-none"></div>
         
-        <div className="container mx-auto px-8 max-w-4xl text-center relative z-10">
+        {/* Subtle snowflakes */}
+        {Array.from({ length: 15 }).map((_, i) => (
+          <div
+            key={i}
+            className="snowflake"
+            style={{
+              left: `${Math.random() * 100}%`,
+              animationDelay: `${Math.random() * 5}s`,
+              fontSize: `${Math.random() * 8 + 8}px`,
+            }}
+          >
+            ❄
+          </div>
+        ))}
+        
+        <div className="container mx-auto px-8 max-w-4xl text-center relative z-20">
           <h1 className="text-5xl font-bold mb-3 tracking-tight bg-gradient-to-r from-white to-[#98989d] bg-clip-text text-transparent">Trading Simulation</h1>
           <p className="text-lg text-[#98989d] mb-6 font-light max-w-2xl mx-auto leading-relaxed">
             Experience a real-time trading simulation. React to market events, make trades, and see how your decisions impact your portfolio.
@@ -229,9 +246,26 @@ export default function SimulatePage() {
       <div className="fixed inset-0 bg-gradient-to-br from-[#000000] via-[#0a0a0f] to-[#000000]"></div>
       <div className="fixed inset-0 bg-[radial-gradient(circle_at_20%_30%,rgba(0,122,255,0.08),transparent_60%)] pointer-events-none"></div>
       <div className="fixed inset-0 bg-[radial-gradient(circle_at_80%_70%,rgba(48,209,88,0.05),transparent_60%)] pointer-events-none"></div>
+      {/* Subtle winter gradient overlay */}
+      <div className="fixed inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(135,206,250,0.02),transparent_70%)] pointer-events-none"></div>
+      
+      {/* Subtle snowflakes */}
+      {Array.from({ length: 15 }).map((_, i) => (
+        <div
+          key={i}
+          className="snowflake"
+          style={{
+            left: `${Math.random() * 100}%`,
+            animationDelay: `${Math.random() * 5}s`,
+            fontSize: `${Math.random() * 8 + 8}px`,
+          }}
+        >
+          ❄
+        </div>
+      ))}
       
       {/* Header */}
-      <div className="border-b border-[#38383a]/50 backdrop-blur-xl bg-black/50 relative z-10">
+      <div className="border-b border-[#38383a]/50 backdrop-blur-xl bg-black/50 relative z-20">
         <div className="container mx-auto px-8 py-6 max-w-7xl">
           <div className="flex items-center justify-between">
             <div>
@@ -260,7 +294,7 @@ export default function SimulatePage() {
       </div>
 
       {/* Main Content */}
-      <div className="container mx-auto px-8 py-8 max-w-7xl relative z-10">
+      <div className="container mx-auto px-8 py-8 max-w-7xl relative z-20">
         <div className="grid lg:grid-cols-3 gap-6">
           {/* Left Column - Main Content */}
           <div className="lg:col-span-2 space-y-6">

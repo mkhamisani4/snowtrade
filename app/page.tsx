@@ -13,10 +13,27 @@ export default function Home() {
       <div className="absolute inset-0 bg-gradient-to-br from-[#000000] via-[#0a0a0f] to-[#000000] opacity-100"></div>
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(0,122,255,0.1),transparent_50%)]"></div>
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(48,209,88,0.05),transparent_50%)]"></div>
+      {/* Subtle winter gradient overlay */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(135,206,250,0.03),transparent_70%)] pointer-events-none"></div>
+      
+      {/* Subtle snowflakes */}
+      {Array.from({ length: 20 }).map((_, i) => (
+        <div
+          key={i}
+          className="snowflake"
+          style={{
+            left: `${Math.random() * 100}%`,
+            animationDelay: `${Math.random() * 5}s`,
+            fontSize: `${Math.random() * 10 + 10}px`,
+          }}
+        >
+          ❄
+        </div>
+      ))}
       
       <div className="container mx-auto px-8 py-8 max-w-5xl flex-1 flex flex-col justify-center relative z-10">
         <div className="text-center mb-8 animate-fade-in">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#007aff]/20 border border-[#007aff]/40 mb-4 backdrop-blur-sm glow-blue">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#007aff]/20 border border-[#007aff]/40 mb-4 backdrop-blur-sm glow-blue winter-glow">
             <span className="text-xs font-semibold text-[#007aff]">Financial Trading Education</span>
           </div>
           <h1 className="text-6xl font-bold mb-3 tracking-tight bg-gradient-to-r from-white via-white to-[#98989d] bg-clip-text text-transparent">
