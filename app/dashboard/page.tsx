@@ -33,14 +33,16 @@ export default function DashboardPage() {
       <div className="fixed inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(135,206,250,0.02),transparent_70%)] pointer-events-none"></div>
       
       {/* Subtle snowflakes */}
-      {Array.from({ length: 12 }).map((_, i) => (
+      {Array.from({ length: 18 }).map((_, i) => (
         <div
           key={i}
           className="snowflake"
           style={{
-            left: `${Math.random() * 100}%`,
-            animationDelay: `${Math.random() * 5}s`,
-            fontSize: `${Math.random() * 8 + 8}px`,
+            left: `${(i * 5.5) % 100}%`,
+            animationDelay: `${(i * 0.3) % 8}s`,
+            animationDuration: `${10 + (i % 8)}s`,
+            fontSize: `${8 + (i % 5)}px`,
+            top: `${-20 - (i % 5) * 10}px`,
           }}
         >
           ❄
