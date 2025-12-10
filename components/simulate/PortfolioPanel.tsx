@@ -35,7 +35,11 @@ export default function PortfolioPanel({ state, portfolioValue, priceHistory }: 
         <div className="text-3xl font-bold mb-2 text-white tracking-tight">
           ${portfolioValue.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
         </div>
-        <div className={`text-sm font-semibold ${returnPercent >= 0 ? 'text-[#30d158]' : 'text-[#ff453a]'}`}>
+        <div className={`text-sm font-semibold transition-all ${
+          returnPercent >= 0 
+            ? 'text-[#30d158] drop-shadow-[0_0_8px_rgba(48,209,88,0.4)]' 
+            : 'text-[#ff453a] drop-shadow-[0_0_8px_rgba(255,69,58,0.4)]'
+        }`}>
           {returnPercent >= 0 ? '+' : ''}{returnPercent.toFixed(2)}%
         </div>
       </div>

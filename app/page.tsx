@@ -8,13 +8,18 @@ export default function Home() {
   const [showHowItWorks, setShowHowItWorks] = useState(false)
 
   return (
-    <div className="h-screen bg-black text-white flex flex-col overflow-hidden">
-      <div className="container mx-auto px-8 py-8 max-w-5xl flex-1 flex flex-col justify-center">
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#007aff]/15 border border-[#007aff]/30 mb-4">
+    <div className="h-screen bg-black text-white flex flex-col overflow-hidden relative">
+      {/* Animated background gradient */}
+      <div className="absolute inset-0 bg-gradient-to-br from-[#000000] via-[#0a0a0f] to-[#000000] opacity-100"></div>
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(0,122,255,0.1),transparent_50%)]"></div>
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(48,209,88,0.05),transparent_50%)]"></div>
+      
+      <div className="container mx-auto px-8 py-8 max-w-5xl flex-1 flex flex-col justify-center relative z-10">
+        <div className="text-center mb-8 animate-fade-in">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#007aff]/20 border border-[#007aff]/40 mb-4 backdrop-blur-sm glow-blue">
             <span className="text-xs font-semibold text-[#007aff]">Financial Trading Education</span>
           </div>
-          <h1 className="text-6xl font-bold mb-3 tracking-tight">
+          <h1 className="text-6xl font-bold mb-3 tracking-tight bg-gradient-to-r from-white via-white to-[#98989d] bg-clip-text text-transparent">
             SnowTrade
           </h1>
           <p className="text-xl text-[#98989d] mb-2 font-light tracking-tight">
@@ -25,8 +30,9 @@ export default function Home() {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-3 mb-6">
-          <div className="card p-5 hover:bg-[#1c1c1e]/80 transition-all duration-300">
+        <div className="grid md:grid-cols-2 gap-4 mb-6">
+          <div className="card p-6 animate-fade-in" style={{ animationDelay: '0.1s' }}>
+            <div className="text-2xl mb-3">🎓</div>
             <h2 className="text-lg font-semibold mb-2 text-white tracking-tight">
               Built for Students
             </h2>
@@ -35,7 +41,8 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="card p-5 hover:bg-[#1c1c1e]/80 transition-all duration-300">
+          <div className="card p-6 animate-fade-in" style={{ animationDelay: '0.2s' }}>
+            <div className="text-2xl mb-3">🚀</div>
             <h2 className="text-lg font-semibold mb-2 text-white tracking-tight">
               Early Career Ready
             </h2>
@@ -44,7 +51,8 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="card p-5 hover:bg-[#1c1c1e]/80 transition-all duration-300">
+          <div className="card p-6 animate-fade-in" style={{ animationDelay: '0.3s' }}>
+            <div className="text-2xl mb-3">🤖</div>
             <h2 className="text-lg font-semibold mb-2 text-white tracking-tight">
               AI-Powered Learning
             </h2>
@@ -53,7 +61,8 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="card p-5 hover:bg-[#1c1c1e]/80 transition-all duration-300">
+          <div className="card p-6 animate-fade-in" style={{ animationDelay: '0.4s' }}>
+            <div className="text-2xl mb-3">📊</div>
             <h2 className="text-lg font-semibold mb-2 text-white tracking-tight">
               Real Scenarios
             </h2>
@@ -64,18 +73,20 @@ export default function Home() {
         </div>
 
         <div className="text-center flex flex-col items-center gap-3">
-          <Link
-            href="/simulate"
-            className="inline-block button-primary py-3.5 px-10 text-base font-semibold"
-          >
-            Start Learning
-          </Link>
-          <button
-            onClick={() => setShowHowItWorks(true)}
-            className="text-[#98989d] hover:text-white transition-colors text-sm font-light underline"
-          >
-            Learn How It Works
-          </button>
+          <div className="flex gap-3">
+            <Link
+              href="/simulate"
+              className="inline-block button-primary py-3.5 px-10 text-base font-semibold"
+            >
+              Start Learning
+            </Link>
+            <button
+              onClick={() => setShowHowItWorks(true)}
+              className="inline-block button-primary py-3.5 px-10 text-base font-semibold"
+            >
+              How It Works
+            </button>
+          </div>
         </div>
       </div>
 

@@ -25,17 +25,22 @@ export default function StockCard({ stock, currentPrice, priceChange, position, 
   return (
     <div
       onClick={onClick}
-      className="card p-5 cursor-pointer hover:bg-[#1c1c1e]/80 transition-all duration-200"
+      className="card p-5 cursor-pointer group relative overflow-hidden"
     >
-      <div className="flex items-center justify-between">
+      {/* Subtle gradient overlay on hover */}
+      <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${
+        isPositive ? 'bg-gradient-to-br from-[#30d158]/5 to-transparent' : 'bg-gradient-to-br from-[#ff453a]/5 to-transparent'
+      }`}></div>
+      
+      <div className="flex items-center justify-between relative z-10">
         <div className="flex-1">
           <div className="flex items-center gap-3 mb-2">
             <div className="flex-1">
-              <div className="font-semibold text-lg text-white">{stock.ticker}</div>
-              <div className="text-xs text-[#98989d] font-light">{stock.name}</div>
+              <div className="font-semibold text-lg text-white group-hover:text-white transition-colors">{stock.ticker}</div>
+              <div className="text-xs text-[#98989d] font-light group-hover:text-[#b0b0b5] transition-colors">{stock.name}</div>
             </div>
             {hasPosition && (
-              <div className="px-2 py-1 bg-[#007aff]/20 text-[#007aff] rounded text-xs font-semibold">
+              <div className="px-3 py-1.5 bg-gradient-to-r from-[#007aff]/25 to-[#007aff]/15 text-[#007aff] rounded-lg text-xs font-semibold border border-[#007aff]/30 backdrop-blur-sm">
                 {position.shares} shares
               </div>
             )}
@@ -81,11 +86,19 @@ export default function StockCard({ stock, currentPrice, priceChange, position, 
         </div>
         <div className="text-right min-w-[100px]">
           {priceChange && (
-            <div className={`text-lg font-semibold mb-1 ${isPositive ? 'text-[#30d158]' : 'text-[#ff453a]'}`}>
+            <div className={`text-lg font-semibold mb-1 transition-all ${
+              isPositive 
+                ? 'text-[#30d158] group-hover:drop-shadow-[0_0_8px_rgba(48,209,88,0.5)]' 
+                : 'text-[#ff453a] group-hover:drop-shadow-[0_0_8px_rgba(255,69,58,0.5)]'
+            }`}>
               {isPositive ? '+' : ''}{priceChange.change.toFixed(2)}
             </div>
           )}
-          <div className={`text-sm font-semibold ${isPositive ? 'text-[#30d158]' : 'text-[#ff453a]'}`}>
+          <div className={`text-sm font-semibold transition-all ${
+            isPositive 
+              ? 'text-[#30d158] group-hover:drop-shadow-[0_0_6px_rgba(48,209,88,0.4)]' 
+              : 'text-[#ff453a] group-hover:drop-shadow-[0_0_6px_rgba(255,69,58,0.4)]'
+          }`}>
             {isPositive ? '+' : ''}{changePercent.toFixed(2)}%
           </div>
         </div>

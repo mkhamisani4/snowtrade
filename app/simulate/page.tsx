@@ -109,95 +109,97 @@ export default function SimulatePage() {
   // Start screen
   if (!hasStarted) {
     return (
-      <div className="min-h-screen bg-black text-white flex items-center justify-center">
-        <div className="container mx-auto px-8 max-w-3xl text-center">
-          <h1 className="text-6xl font-bold mb-6 tracking-tight">Trading Simulation</h1>
-          <p className="text-xl text-[#98989d] mb-12 font-light max-w-2xl mx-auto leading-relaxed">
+      <div className="h-screen bg-black text-white flex items-center justify-center overflow-hidden relative">
+        {/* Subtle animated background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-[#000000] via-[#0a0a0f] to-[#000000]"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(0,122,255,0.1),transparent_50%)]"></div>
+        
+        <div className="container mx-auto px-8 max-w-4xl text-center relative z-10">
+          <h1 className="text-5xl font-bold mb-3 tracking-tight bg-gradient-to-r from-white to-[#98989d] bg-clip-text text-transparent">Trading Simulation</h1>
+          <p className="text-lg text-[#98989d] mb-6 font-light max-w-2xl mx-auto leading-relaxed">
             Experience a real-time trading simulation. React to market events, make trades, and see how your decisions impact your portfolio.
           </p>
           
-          <div className="card p-8 mb-8 max-w-xl mx-auto">
-            <h2 className="text-2xl font-semibold mb-6 text-white tracking-tight">Simulation Details</h2>
-            <div className="space-y-4 text-left mb-6">
-              <div className="flex items-start gap-4">
-                <div className="text-2xl">💰</div>
+          <div className="card p-6 mb-6 max-w-2xl mx-auto">
+            <h2 className="text-xl font-semibold mb-4 text-white tracking-tight">Simulation Details</h2>
+            <div className="grid grid-cols-2 gap-3 text-left mb-5">
+              <div className="flex items-start gap-3">
+                <div className="text-xl">💰</div>
                 <div>
-                  <div className="font-semibold text-white mb-1">Starting Balance</div>
-                  <div className="text-[#98989d] font-light">$10,000</div>
+                  <div className="font-semibold text-white text-sm mb-0.5">Starting Balance</div>
+                  <div className="text-xs text-[#98989d] font-light">$10,000</div>
                 </div>
               </div>
-              <div className="flex items-start gap-4">
-                <div className="text-2xl">⏰</div>
+              <div className="flex items-start gap-3">
+                <div className="text-xl">⏰</div>
                 <div>
-                  <div className="font-semibold text-white mb-1">Duration</div>
-                  <div className="text-[#98989d] font-light">80 hours (10 trading days, 8 hours/day)</div>
+                  <div className="font-semibold text-white text-sm mb-0.5">Duration</div>
+                  <div className="text-xs text-[#98989d] font-light">80 hours (10 days)</div>
                 </div>
               </div>
-              <div className="flex items-start gap-4">
-                <div className="text-2xl">📊</div>
+              <div className="flex items-start gap-3">
+                <div className="text-xl">📊</div>
                 <div>
-                  <div className="font-semibold text-white mb-1">Stocks Available</div>
-                  <div className="text-[#98989d] font-light">10 fictional stocks across different sectors</div>
+                  <div className="font-semibold text-white text-sm mb-0.5">Stocks Available</div>
+                  <div className="text-xs text-[#98989d] font-light">10 stocks</div>
                 </div>
               </div>
-              <div className="flex items-start gap-4">
-                <div className="text-2xl">⚡</div>
+              <div className="flex items-start gap-3">
+                <div className="text-xl">⚡</div>
                 <div>
-                  <div className="font-semibold text-white mb-1">Market Events</div>
-                  <div className="text-[#98989d] font-light">Random events will occur that affect stock prices</div>
+                  <div className="font-semibold text-white text-sm mb-0.5">Market Events</div>
+                  <div className="text-xs text-[#98989d] font-light">Random events</div>
                 </div>
               </div>
             </div>
 
             {/* Difficulty Slider */}
-            <div className="border-t border-[#38383a]/50 pt-6">
-              <div className="flex items-center justify-between mb-4">
+            <div className="border-t border-[#38383a]/50 pt-4">
+              <div className="flex items-center justify-between mb-3">
                 <div>
-                  <div className="font-semibold text-white mb-1">Difficulty</div>
-                  <div className="text-sm text-[#98989d] font-light">
-                    {difficulty === 'easy' && 'More positive events, easier to profit'}
-                    {difficulty === 'medium' && 'Balanced positive and negative events'}
-                    {difficulty === 'hard' && 'More negative events, higher volatility'}
+                  <div className="font-semibold text-white text-sm mb-0.5">Difficulty</div>
+                  <div className="text-xs text-[#98989d] font-light">
+                    {difficulty === 'easy' && 'More positive events'}
+                    {difficulty === 'medium' && 'Balanced events'}
+                    {difficulty === 'hard' && 'More negative events'}
                   </div>
                 </div>
-                <div className="px-4 py-2 bg-[#2c2c2e] rounded-xl">
-                  <span className="text-lg font-semibold text-white capitalize">{difficulty}</span>
+                <div className="px-3 py-1.5 bg-[#2c2c2e] rounded-lg">
+                  <span className="text-sm font-semibold text-white capitalize">{difficulty}</span>
                 </div>
               </div>
-              <div className="space-y-3">
-                <div className="flex gap-3">
-                  {(['easy', 'medium', 'hard'] as const).map((level) => (
-                    <button
-                      key={level}
-                      onClick={() => setDifficulty(level)}
-                      className={`flex-1 px-4 py-3 rounded-xl text-sm font-semibold transition-all ios-button ${
-                        difficulty === level
-                          ? level === 'easy' 
-                            ? 'bg-[#30d158] text-white' 
-                            : level === 'medium'
-                            ? 'bg-[#ff9f0a] text-white'
-                            : 'bg-[#ff453a] text-white'
-                          : 'bg-[#2c2c2e] text-[#98989d] hover:bg-[#38383a]'
-                      }`}
-                    >
-                      {level.charAt(0).toUpperCase() + level.slice(1)}
-                    </button>
-                  ))}
-                </div>
+              <div className="flex gap-2">
+                {(['easy', 'medium', 'hard'] as const).map((level) => (
+                  <button
+                    key={level}
+                    onClick={() => setDifficulty(level)}
+                    className={`flex-1 px-3 py-2.5 rounded-xl text-xs font-semibold transition-all ios-button ${
+                      difficulty === level
+                        ? level === 'easy' 
+                          ? 'bg-[#30d158] text-white' 
+                          : level === 'medium'
+                          ? 'bg-[#ff9f0a] text-white'
+                          : 'bg-[#ff453a] text-white'
+                        : 'bg-[#2c2c2e] text-[#98989d] hover:bg-[#38383a]'
+                    }`}
+                  >
+                    {level.charAt(0).toUpperCase() + level.slice(1)}
+                  </button>
+                ))}
               </div>
             </div>
           </div>
 
-          <div className="flex flex-col items-center gap-4">
+          <div className="flex flex-col items-center gap-3">
             <button
               onClick={startSimulation}
-              className="button-primary py-4 px-12 text-lg font-semibold"
+              className="button-primary py-3.5 px-12 text-base font-semibold"
             >
               Start Simulation
             </button>
             <Link
               href="/"
-              className="text-[#98989d] hover:text-white transition-colors text-sm font-light"
+              className="text-[#98989d] hover:text-white transition-colors text-xs font-light"
             >
               ← Back to Home
             </Link>
@@ -222,16 +224,21 @@ export default function SimulatePage() {
   const isEndOfTradingDay = state.currentHour % 8 === 0
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-black text-white relative">
+      {/* Subtle animated background */}
+      <div className="fixed inset-0 bg-gradient-to-br from-[#000000] via-[#0a0a0f] to-[#000000]"></div>
+      <div className="fixed inset-0 bg-[radial-gradient(circle_at_20%_30%,rgba(0,122,255,0.08),transparent_60%)] pointer-events-none"></div>
+      <div className="fixed inset-0 bg-[radial-gradient(circle_at_80%_70%,rgba(48,209,88,0.05),transparent_60%)] pointer-events-none"></div>
+      
       {/* Header */}
-      <div className="border-b border-[#38383a]/50">
+      <div className="border-b border-[#38383a]/50 backdrop-blur-xl bg-black/50 relative z-10">
         <div className="container mx-auto px-8 py-6 max-w-7xl">
           <div className="flex items-center justify-between">
             <div>
-              <Link href="/" className="text-[#007aff] hover:text-[#0051d5] transition-colors text-sm font-medium mb-2 inline-block">
+              <Link href="/" className="text-[#007aff] hover:text-[#0051d5] transition-all text-sm font-medium mb-2 inline-block hover:drop-shadow-[0_0_8px_rgba(0,122,255,0.5)]">
                 ← Back
               </Link>
-              <h1 className="text-4xl font-bold tracking-tight">Trading Simulation</h1>
+              <h1 className="text-4xl font-bold tracking-tight bg-gradient-to-r from-white to-[#98989d] bg-clip-text text-transparent">Trading Simulation</h1>
             </div>
             <div className="text-right">
               <div className="text-sm text-[#98989d] mb-1 font-light">
@@ -240,7 +247,11 @@ export default function SimulatePage() {
               <div className="text-3xl font-bold tracking-tight">
                 ${portfolioValue.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
               </div>
-              <div className={`text-sm font-semibold mt-1 ${returnPercent >= 0 ? 'text-[#30d158]' : 'text-[#ff453a]'}`}>
+              <div className={`text-sm font-semibold mt-1 transition-all ${
+                returnPercent >= 0 
+                  ? 'text-[#30d158] drop-shadow-[0_0_8px_rgba(48,209,88,0.4)]' 
+                  : 'text-[#ff453a] drop-shadow-[0_0_8px_rgba(255,69,58,0.4)]'
+              }`}>
                 {returnPercent >= 0 ? '+' : ''}{returnPercent.toFixed(2)}%
               </div>
             </div>
@@ -249,7 +260,7 @@ export default function SimulatePage() {
       </div>
 
       {/* Main Content */}
-      <div className="container mx-auto px-8 py-8 max-w-7xl">
+      <div className="container mx-auto px-8 py-8 max-w-7xl relative z-10">
         <div className="grid lg:grid-cols-3 gap-6">
           {/* Left Column - Main Content */}
           <div className="lg:col-span-2 space-y-6">
@@ -258,7 +269,7 @@ export default function SimulatePage() {
                 <div className="flex gap-2 border-b border-[#38383a]/50">
                   <button
                     onClick={() => setActiveTab('stocks')}
-                    className={`px-6 py-3 text-sm font-semibold transition-colors relative ${
+                    className={`px-6 py-3 text-sm font-semibold transition-all relative ${
                       activeTab === 'stocks'
                         ? 'text-white'
                         : 'text-[#98989d] hover:text-white'
@@ -266,12 +277,12 @@ export default function SimulatePage() {
                   >
                     Stocks
                     {activeTab === 'stocks' && (
-                      <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#007aff]"></div>
+                      <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-[#007aff] to-transparent shadow-[0_0_8px_rgba(0,122,255,0.6)]"></div>
                     )}
                   </button>
                   <button
                     onClick={() => setActiveTab('watchlist')}
-                    className={`px-6 py-3 text-sm font-semibold transition-colors relative ${
+                    className={`px-6 py-3 text-sm font-semibold transition-all relative ${
                       activeTab === 'watchlist'
                         ? 'text-white'
                         : 'text-[#98989d] hover:text-white'
@@ -279,12 +290,12 @@ export default function SimulatePage() {
                   >
                     Watchlist
                     {activeTab === 'watchlist' && (
-                      <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#007aff]"></div>
+                      <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-[#007aff] to-transparent shadow-[0_0_8px_rgba(0,122,255,0.6)]"></div>
                     )}
                   </button>
                   <button
                     onClick={() => setActiveTab('news')}
-                    className={`px-6 py-3 text-sm font-semibold transition-colors relative ${
+                    className={`px-6 py-3 text-sm font-semibold transition-all relative ${
                       activeTab === 'news'
                         ? 'text-white'
                         : 'text-[#98989d] hover:text-white'
@@ -292,12 +303,12 @@ export default function SimulatePage() {
                   >
                     News
                     {activeTab === 'news' && (
-                      <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#007aff]"></div>
+                      <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-[#007aff] to-transparent shadow-[0_0_8px_rgba(0,122,255,0.6)]"></div>
                     )}
                   </button>
                   <button
                     onClick={() => setActiveTab('chart')}
-                    className={`px-6 py-3 text-sm font-semibold transition-colors relative ${
+                    className={`px-6 py-3 text-sm font-semibold transition-all relative ${
                       activeTab === 'chart'
                         ? 'text-white'
                         : 'text-[#98989d] hover:text-white'
@@ -305,7 +316,7 @@ export default function SimulatePage() {
                   >
                     Chart
                     {activeTab === 'chart' && (
-                      <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#007aff]"></div>
+                      <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-[#007aff] to-transparent shadow-[0_0_8px_rgba(0,122,255,0.6)]"></div>
                     )}
                   </button>
                 </div>
