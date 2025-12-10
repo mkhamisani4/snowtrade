@@ -37,7 +37,7 @@ export interface Trade {
   id: string
   session_id: string
   stock_id: string
-  type: 'buy' | 'sell' | 'short'
+  type: 'buy' | 'sell' | 'short' | 'cover'
   shares: number
   price: number
   day: number
