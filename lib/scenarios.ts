@@ -2844,6 +2844,407 @@ export const scenarios: Scenario[] = [
     impact: 'extreme',
     duration: 'medium'
   },
+  // Additional Random Crashes and Negative Events (281-320)
+  {
+    id: '281',
+    title: 'Sudden Market Correction',
+    description: 'Market experiences sudden 8% correction as investors take profits and fear overvaluation.',
+    type: 'crisis',
+    sentiment: 'negative',
+    affectedStocks: ['GLCR', 'EDU', 'SOLR', 'MEDX', 'FINX', 'AUTO', 'RETAIL', 'BIO', 'CLOUD', 'GREEN'],
+    impact: 'high',
+    duration: 'short'
+  },
+  {
+    id: '282',
+    title: 'Tech Sector Crash',
+    description: 'Technology sector crashes 12% as growth concerns mount and valuations questioned.',
+    type: 'sector',
+    sentiment: 'negative',
+    affectedStocks: ['GLCR', 'CLOUD', 'FINX'],
+    impact: 'extreme',
+    duration: 'short'
+  },
+  {
+    id: '283',
+    title: 'Healthcare Sector Sell-Off',
+    description: 'Healthcare stocks plummet 10% on reimbursement cuts and regulatory fears.',
+    type: 'sector',
+    sentiment: 'negative',
+    affectedStocks: ['MEDX', 'BIO'],
+    impact: 'high',
+    duration: 'short'
+  },
+  {
+    id: '284',
+    title: 'Energy Sector Collapse',
+    description: 'Renewable energy stocks crash 15% as government subsidies cut unexpectedly.',
+    type: 'sector',
+    sentiment: 'negative',
+    affectedStocks: ['SOLR', 'GREEN'],
+    impact: 'extreme',
+    duration: 'immediate'
+  },
+  {
+    id: '285',
+    title: 'Retail Sector Bloodbath',
+    description: 'Retail stocks crash 18% as consumer spending collapses and inventory piles up.',
+    type: 'sector',
+    sentiment: 'negative',
+    affectedStocks: ['RETAIL'],
+    impact: 'extreme',
+    duration: 'short'
+  },
+  {
+    id: '286',
+    title: 'Glacier Tech Stock Plummets',
+    description: 'GLCR stock crashes 25% on news of major customer loss and revenue miss.',
+    type: 'crisis',
+    sentiment: 'negative',
+    affectedStocks: ['GLCR'],
+    impact: 'extreme',
+    duration: 'immediate'
+  },
+  {
+    id: '287',
+    title: 'EduLearn Enrollment Disaster',
+    description: 'EDU stock drops 20% as enrollment numbers collapse and accreditation threatened.',
+    type: 'crisis',
+    sentiment: 'negative',
+    affectedStocks: ['EDU'],
+    impact: 'high',
+    duration: 'immediate'
+  },
+  {
+    id: '288',
+    title: 'Solar Energy Co Manufacturing Crisis',
+    description: 'SOLR crashes 22% as manufacturing defects discovered, forcing massive recall.',
+    type: 'crisis',
+    sentiment: 'negative',
+    affectedStocks: ['SOLR'],
+    impact: 'extreme',
+    duration: 'medium'
+  },
+  {
+    id: '289',
+    title: 'MedTech Solutions Regulatory Nightmare',
+    description: 'MEDX plummets 18% as FDA halts all approvals and launches investigation.',
+    type: 'regulatory',
+    sentiment: 'negative',
+    affectedStocks: ['MEDX'],
+    impact: 'extreme',
+    duration: 'long'
+  },
+  {
+    id: '290',
+    title: 'FinTech Innovations Security Breach',
+    description: 'FINX drops 15% after massive security breach exposes millions of customer accounts.',
+    type: 'crisis',
+    sentiment: 'negative',
+    affectedStocks: ['FINX'],
+    impact: 'high',
+    duration: 'medium'
+  },
+  {
+    id: '291',
+    title: 'AutoDrive Systems Safety Scandal',
+    description: 'AUTO crashes 30% as multiple fatal accidents linked to autonomous systems.',
+    type: 'crisis',
+    sentiment: 'negative',
+    affectedStocks: ['AUTO'],
+    impact: 'extreme',
+    duration: 'long'
+  },
+  {
+    id: '292',
+    title: 'RetailMax Corp Store Closures',
+    description: 'RETAIL plummets 25% as company announces closure of 200 stores and layoffs.',
+    type: 'crisis',
+    sentiment: 'negative',
+    affectedStocks: ['RETAIL'],
+    impact: 'extreme',
+    duration: 'immediate'
+  },
+  {
+    id: '293',
+    title: 'BioGen Labs Drug Failure',
+    description: 'BIO crashes 35% as lead drug candidate fails Phase 3 trial spectacularly.',
+    type: 'earnings',
+    sentiment: 'negative',
+    affectedStocks: ['BIO'],
+    impact: 'extreme',
+    duration: 'immediate'
+  },
+  {
+    id: '294',
+    title: 'CloudScale Inc Customer Exodus',
+    description: 'CLOUD drops 20% as three major enterprise customers terminate contracts.',
+    type: 'crisis',
+    sentiment: 'negative',
+    affectedStocks: ['CLOUD'],
+    impact: 'high',
+    duration: 'immediate'
+  },
+  {
+    id: '295',
+    title: 'GreenPower Energy Project Failure',
+    description: 'GREEN crashes 28% as flagship renewable energy project declared unviable.',
+    type: 'crisis',
+    sentiment: 'negative',
+    affectedStocks: ['GREEN'],
+    impact: 'extreme',
+    duration: 'medium'
+  },
+  {
+    id: '296',
+    title: 'Random Market Volatility Spike',
+    description: 'Unexpected volatility spike causes panic selling across all sectors.',
+    type: 'technical',
+    sentiment: 'negative',
+    affectedStocks: ['GLCR', 'EDU', 'SOLR', 'MEDX', 'FINX', 'AUTO', 'RETAIL', 'BIO', 'CLOUD', 'GREEN'],
+    impact: 'medium',
+    duration: 'immediate'
+  },
+  {
+    id: '297',
+    title: 'Institutional Sell-Off',
+    description: 'Large institutional investors dump positions, causing widespread price declines.',
+    type: 'technical',
+    sentiment: 'negative',
+    affectedStocks: ['GLCR', 'CLOUD', 'BIO', 'GREEN'],
+    impact: 'high',
+    duration: 'short'
+  },
+  {
+    id: '298',
+    title: 'Margin Call Cascade',
+    description: 'Margin calls trigger forced selling, creating downward price spiral.',
+    type: 'technical',
+    sentiment: 'negative',
+    affectedStocks: ['GLCR', 'EDU', 'SOLR', 'MEDX', 'FINX', 'AUTO', 'RETAIL', 'BIO', 'CLOUD', 'GREEN'],
+    impact: 'high',
+    duration: 'short'
+  },
+  {
+    id: '299',
+    title: 'Earnings Season Disaster',
+    description: 'Multiple companies miss earnings expectations, triggering sector-wide selloff.',
+    type: 'earnings',
+    sentiment: 'negative',
+    affectedStocks: ['GLCR', 'EDU', 'SOLR', 'MEDX', 'FINX', 'AUTO', 'RETAIL', 'BIO', 'CLOUD', 'GREEN'],
+    impact: 'high',
+    duration: 'short'
+  },
+  {
+    id: '300',
+    title: 'Recession Fears Mount',
+    description: 'Economic indicators point to recession, causing broad market decline.',
+    type: 'macro',
+    sentiment: 'negative',
+    affectedStocks: ['GLCR', 'EDU', 'SOLR', 'MEDX', 'FINX', 'AUTO', 'RETAIL', 'BIO', 'CLOUD', 'GREEN'],
+    impact: 'extreme',
+    duration: 'medium'
+  },
+  {
+    id: '301',
+    title: 'Inflation Shock',
+    description: 'Unexpected inflation spike triggers fears of aggressive rate hikes.',
+    type: 'macro',
+    sentiment: 'negative',
+    affectedStocks: ['GLCR', 'CLOUD', 'FINX', 'AUTO', 'RETAIL'],
+    impact: 'high',
+    duration: 'short'
+  },
+  {
+    id: '302',
+    title: 'Unemployment Surge',
+    description: 'Unemployment jumps unexpectedly, signaling economic weakness.',
+    type: 'macro',
+    sentiment: 'negative',
+    affectedStocks: ['RETAIL', 'AUTO', 'EDU'],
+    impact: 'medium',
+    duration: 'short'
+  },
+  {
+    id: '303',
+    title: 'Credit Rating Downgrades',
+    description: 'Multiple companies face credit rating downgrades, increasing borrowing costs.',
+    type: 'macro',
+    sentiment: 'negative',
+    affectedStocks: ['FINX', 'RETAIL', 'AUTO', 'SOLR', 'GREEN'],
+    impact: 'high',
+    duration: 'medium'
+  },
+  {
+    id: '304',
+    title: 'Commodity Price Crash',
+    description: 'Commodity prices collapse, impacting manufacturing and energy sectors.',
+    type: 'macro',
+    sentiment: 'negative',
+    affectedStocks: ['AUTO', 'SOLR', 'GREEN'],
+    impact: 'medium',
+    duration: 'short'
+  },
+  {
+    id: '305',
+    title: 'Currency Crisis',
+    description: 'Currency crisis triggers capital flight and market panic.',
+    type: 'geopolitical',
+    sentiment: 'negative',
+    affectedStocks: ['GLCR', 'CLOUD', 'SOLR', 'GREEN'],
+    impact: 'high',
+    duration: 'medium'
+  },
+  {
+    id: '306',
+    title: 'Random Stock Crash - Glacier Tech',
+    description: 'GLCR experiences unexplained 15% drop with no clear catalyst.',
+    type: 'technical',
+    sentiment: 'negative',
+    affectedStocks: ['GLCR'],
+    impact: 'high',
+    duration: 'immediate'
+  },
+  {
+    id: '307',
+    title: 'Random Stock Crash - EduLearn',
+    description: 'EDU sees sudden 12% decline on heavy volume, reasons unclear.',
+    type: 'technical',
+    sentiment: 'negative',
+    affectedStocks: ['EDU'],
+    impact: 'medium',
+    duration: 'immediate'
+  },
+  {
+    id: '308',
+    title: 'Random Stock Crash - Solar Energy',
+    description: 'SOLR plummets 18% unexpectedly, possibly due to large block trade.',
+    type: 'technical',
+    sentiment: 'negative',
+    affectedStocks: ['SOLR'],
+    impact: 'high',
+    duration: 'immediate'
+  },
+  {
+    id: '309',
+    title: 'Random Stock Crash - MedTech',
+    description: 'MEDX drops 14% with no news, technical selling pressure.',
+    type: 'technical',
+    sentiment: 'negative',
+    affectedStocks: ['MEDX'],
+    impact: 'medium',
+    duration: 'immediate'
+  },
+  {
+    id: '310',
+    title: 'Random Stock Crash - FinTech',
+    description: 'FINX crashes 16% on unexplained selling pressure.',
+    type: 'technical',
+    sentiment: 'negative',
+    affectedStocks: ['FINX'],
+    impact: 'high',
+    duration: 'immediate'
+  },
+  {
+    id: '311',
+    title: 'Random Stock Crash - AutoDrive',
+    description: 'AUTO sees 20% drop, possibly due to insider selling or technical breakdown.',
+    type: 'technical',
+    sentiment: 'negative',
+    affectedStocks: ['AUTO'],
+    impact: 'extreme',
+    duration: 'immediate'
+  },
+  {
+    id: '312',
+    title: 'Random Stock Crash - RetailMax',
+    description: 'RETAIL plummets 17% on heavy volume, no clear fundamental reason.',
+    type: 'technical',
+    sentiment: 'negative',
+    affectedStocks: ['RETAIL'],
+    impact: 'high',
+    duration: 'immediate'
+  },
+  {
+    id: '313',
+    title: 'Random Stock Crash - BioGen',
+    description: 'BIO drops 22% unexpectedly, possibly due to failed trial rumors.',
+    type: 'rumor',
+    sentiment: 'negative',
+    affectedStocks: ['BIO'],
+    impact: 'extreme',
+    duration: 'immediate'
+  },
+  {
+    id: '314',
+    title: 'Random Stock Crash - CloudScale',
+    description: 'CLOUD crashes 19% on technical selling and margin calls.',
+    type: 'technical',
+    sentiment: 'negative',
+    affectedStocks: ['CLOUD'],
+    impact: 'high',
+    duration: 'immediate'
+  },
+  {
+    id: '315',
+    title: 'Random Stock Crash - GreenPower',
+    description: 'GREEN plummets 21% with no apparent catalyst, heavy selling.',
+    type: 'technical',
+    sentiment: 'negative',
+    affectedStocks: ['GREEN'],
+    impact: 'extreme',
+    duration: 'immediate'
+  },
+  {
+    id: '316',
+    title: 'Mid-Day Market Panic',
+    description: 'Sudden market panic at midday causes 6% broad market decline.',
+    type: 'crisis',
+    sentiment: 'negative',
+    affectedStocks: ['GLCR', 'EDU', 'SOLR', 'MEDX', 'FINX', 'AUTO', 'RETAIL', 'BIO', 'CLOUD', 'GREEN'],
+    impact: 'high',
+    duration: 'immediate'
+  },
+  {
+    id: '317',
+    title: 'After-Hours Trading Crash',
+    description: 'After-hours trading sees massive selloff, setting up for next day decline.',
+    type: 'technical',
+    sentiment: 'negative',
+    affectedStocks: ['GLCR', 'CLOUD', 'BIO', 'GREEN'],
+    impact: 'medium',
+    duration: 'short'
+  },
+  {
+    id: '318',
+    title: 'Sector Rotation Out of Growth',
+    description: 'Investors rotate out of growth stocks into value, crushing tech and biotech.',
+    type: 'sector',
+    sentiment: 'negative',
+    affectedStocks: ['GLCR', 'CLOUD', 'BIO', 'FINX'],
+    impact: 'high',
+    duration: 'medium'
+  },
+  {
+    id: '319',
+    title: 'High-Frequency Trading Glitch',
+    description: 'Algorithmic trading glitch causes rapid-fire selling, triggering circuit breakers.',
+    type: 'technical',
+    sentiment: 'negative',
+    affectedStocks: ['GLCR', 'EDU', 'SOLR', 'MEDX', 'FINX', 'AUTO', 'RETAIL', 'BIO', 'CLOUD', 'GREEN'],
+    impact: 'extreme',
+    duration: 'immediate'
+  },
+  {
+    id: '320',
+    title: 'Random Negative Price Action',
+    description: 'Unexplained negative price movement across multiple stocks, possibly due to large fund liquidation.',
+    type: 'technical',
+    sentiment: 'negative',
+    affectedStocks: ['GLCR', 'EDU', 'SOLR', 'MEDX', 'FINX', 'AUTO', 'RETAIL', 'BIO', 'CLOUD', 'GREEN'],
+    impact: 'medium',
+    duration: 'immediate'
+  },
 ]
 
 export function getScenarioById(id: string): Scenario | undefined {

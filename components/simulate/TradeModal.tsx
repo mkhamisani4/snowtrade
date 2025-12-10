@@ -1,26 +1,34 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Position } from '@/lib/simulation-engine'
+import { Position, OptionPosition } from '@/lib/simulation-engine'
 
 interface TradeModalProps {
   ticker: string
   currentPrice: number
   position?: Position
+  optionPositions?: OptionPosition[]
+  currentHour?: number
   cashBalance: number
   onTrade: (ticker: string, type: 'buy' | 'sell', shares: number) => void
   onOptionTrade?: (ticker: string, type: 'call' | 'put', contracts: number, strikePrice: number, expirationHours: number) => void
+  onCloseOption?: (ticker: string, optionIndex: number) => void
   onClose: () => void
 }
 
-export default function TradeModal({ ticker, currentPrice, position, cashBalance, onTrade, onOptionTrade, onClose }: TradeModalProps) {
+export default function TradeModal({ ticker, currentPrice, position, optionPositions = [], currentHour = 1, cashBalance, onTrade, onOptionTrade, onCloseOption, onClose }: TradeModalProps) {
   const [shares, setShares] = useState('')
-  const [tradeType, setTradeType] = useState<'buy' | 'sell' | 'call' | 'put'>('buy')
+  const [tradeType, setTradeType] = useState<'buy' | 'sell' | 'call' | 'put' | 'close-option'>('buy')
   const [strikePrice, setStrikePrice] = useState('')
   const [contracts, setContracts] = useState('')
   const [expirationHours, setExpirationHours] = useState(8)
+  const [selectedOptionIndex, setSelectedOptionIndex] = useState<number | null>(null)
   const ownedShares = position?.shares || 0
   const isOptions = tradeType === 'call' || tradeType === 'put'
+  const isClosingOption = tradeType === 'close-option'
+  
+  // Filter active options
+  const activeOptions = optionPositions.filter(opt => opt.expirationHour > currentHour)
   
   // Auto-select at-the-money strike when switching to options
   useEffect(() => {
@@ -30,6 +38,15 @@ export default function TradeModal({ ticker, currentPrice, position, cashBalance
   }, [isOptions, currentPrice, strikePrice])
 
   const handleTrade = () => {
+    if (isClosingOption) {
+      if (!onCloseOption || selectedOptionIndex === null) {
+        alert('Please select an option to close')
+        return
+      }
+      onCloseOption(ticker, selectedOptionIndex)
+      return
+    }
+    
     if (isOptions) {
       if (!onOptionTrade) {
         alert('Options trading not available')
@@ -149,7 +166,7 @@ export default function TradeModal({ ticker, currentPrice, position, cashBalance
                     : 'bg-[#2c2c2e] text-[#98989d] hover:bg-[#38383a]'
                 }`}
               >
-                Call Option
+                Buy Call
               </button>
               <button
                 onClick={() => setTradeType('put')}
@@ -159,12 +176,85 @@ export default function TradeModal({ ticker, currentPrice, position, cashBalance
                     : 'bg-[#2c2c2e] text-[#98989d] hover:bg-[#38383a]'
                 }`}
               >
-                Put Option
+                Buy Put
               </button>
             </div>
+            {activeOptions.length > 0 && (
+              <div className="mt-2">
+                <button
+                  onClick={() => setTradeType('close-option')}
+                  className={`w-full px-4 py-2 rounded-xl text-xs font-semibold ios-button ${
+                    tradeType === 'close-option'
+                      ? 'bg-[#30d158] text-white'
+                      : 'bg-[#2c2c2e] text-[#98989d] hover:bg-[#38383a]'
+                  }`}
+                >
+                  Close Option Position
+                </button>
+              </div>
+            )}
           </div>
 
-          {isOptions ? (
+          {isClosingOption ? (
+            <>
+              <div className="mb-4">
+                <label className="block text-sm text-[#98989d] font-light mb-2">Select Option to Close</label>
+                {activeOptions.length === 0 ? (
+                  <div className="text-sm text-[#98989d] font-light py-4 text-center">No active options</div>
+                ) : (
+                  <div className="space-y-2">
+                    {activeOptions.map((opt, idx) => {
+                      const originalIndex = optionPositions.findIndex(o => 
+                        o.ticker === opt.ticker && 
+                        o.type === opt.type && 
+                        o.strikePrice === opt.strikePrice && 
+                        o.expirationHour === opt.expirationHour &&
+                        o.hour === opt.hour
+                      )
+                      let intrinsicValue = 0
+                      if (opt.type === 'call') {
+                        intrinsicValue = Math.max(0, currentPrice - opt.strikePrice)
+                      } else {
+                        intrinsicValue = Math.max(0, opt.strikePrice - currentPrice)
+                      }
+                      const currentValue = intrinsicValue * opt.contracts * 100
+                      const pnl = currentValue - (opt.premium * opt.contracts * 100)
+                      const hoursRemaining = opt.expirationHour - currentHour
+                      
+                      return (
+                        <button
+                          key={idx}
+                          onClick={() => setSelectedOptionIndex(originalIndex)}
+                          className={`w-full p-3 rounded-xl text-left transition-all ${
+                            selectedOptionIndex === originalIndex
+                              ? 'bg-[#007aff] border-2 border-[#007aff]'
+                              : 'bg-[#1c1c1e] border border-[#38383a]/50 hover:bg-[#2c2c2e]'
+                          }`}
+                        >
+                          <div className="flex justify-between items-start mb-1">
+                            <div>
+                              <div className="font-semibold text-white text-sm">
+                                {opt.type.toUpperCase()} ${opt.strikePrice.toFixed(2)}
+                              </div>
+                              <div className="text-xs text-[#98989d] mt-0.5">
+                                {opt.contracts} contracts • {hoursRemaining}h remaining
+                              </div>
+                            </div>
+                            <div className="text-right">
+                              <div className="font-semibold text-white text-sm">${currentValue.toFixed(2)}</div>
+                              <div className={`text-xs font-semibold ${pnl >= 0 ? 'text-[#30d158]' : 'text-[#ff453a]'}`}>
+                                {pnl >= 0 ? '+' : ''}${pnl.toFixed(2)}
+                              </div>
+                            </div>
+                          </div>
+                        </button>
+                      )
+                    })}
+                  </div>
+                )}
+              </div>
+            </>
+          ) : isOptions ? (
             <>
               <div className="mb-4">
                 <label className="block text-sm text-[#98989d] font-light mb-2">Contracts</label>
@@ -274,8 +364,9 @@ export default function TradeModal({ ticker, currentPrice, position, cashBalance
             <button
               onClick={handleTrade}
               className="flex-1 px-6 py-3 bg-[#007aff] hover:bg-[#0051d5] text-white rounded-xl font-semibold ios-button"
+              disabled={isClosingOption && selectedOptionIndex === null}
             >
-              Execute
+              {isClosingOption ? 'Close Option' : 'Execute'}
             </button>
           </div>
         </div>

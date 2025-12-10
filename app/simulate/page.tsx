@@ -57,6 +57,18 @@ export default function SimulatePage() {
     }
   }
 
+  const handleCloseOption = (ticker: string, optionIndex: number) => {
+    if (!simulation) return
+    const result = simulation.closeOptionPosition(ticker, optionIndex)
+    if (result.success) {
+      setState(simulation.getState())
+      setShowTradeModal(false)
+      setSelectedStock(null)
+    } else {
+      alert(result.error)
+    }
+  }
+
   const handleTrade = (ticker: string, type: 'buy' | 'sell', shares: number) => {
     if (!simulation) return
 
@@ -479,9 +491,12 @@ export default function SimulatePage() {
               ticker={selectedStock}
               currentPrice={state.stockPrices.get(selectedStock) || 0}
               position={state.positions.get(selectedStock)}
+              optionPositions={state.optionPositions.get(selectedStock) || []}
+              currentHour={state.currentHour}
               cashBalance={state.cashBalance}
               onTrade={handleTrade}
               onOptionTrade={handleOptionTrade}
+              onCloseOption={handleCloseOption}
               onClose={() => {
                 setShowTradeModal(false)
                 setSelectedStock(null)
